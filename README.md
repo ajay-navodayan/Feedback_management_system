@@ -31,7 +31,7 @@ The Feedback Management System is a web application built with Python Flask that
 
 - Python 3.x
 - PostgreSQL
-- Virtualenv (optional but recommended)
+  
 
 ### Setup Instructions
 

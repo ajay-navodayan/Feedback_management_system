@@ -77,8 +77,8 @@ The Feedback Management System is a web application built with Python Flask that
 ### Student Portal
 
 - Students can log in using their Google accounts from sitare id only.
-- They can view their courses and submit feedback on Saturdays.
-- Students can view past feedback submissions.
+- They can view their courses dynamically and submit feedback on Saturday only.
+- Students can view past feedback submissions on rest of the day.
 
 ### Teacher Portal
 
@@ -86,6 +86,7 @@ The Feedback Management System is a web application built with Python Flask that
 - Teachers can log in using their authorized email addresses.
 
 - They can view course-wise feedback, including average ratings, rating distributions, and individual remarks.
+- There is also filter option available for filtering the data in table.
   
 
 ## Database Schema

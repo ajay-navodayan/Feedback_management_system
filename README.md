@@ -1,6 +1,6 @@
 # Feedback Management System
-- **contributor:Puneet and Ajay
-- **Mentor :Dr Kushal shah
+- contributor:Puneet and Ajay
+- Mentor :Dr Kushal shah
 
 ## Project Overview
 

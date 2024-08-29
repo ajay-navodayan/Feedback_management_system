@@ -1,4 +1,6 @@
 # Feedback Management System
+##contributor:Puneet and Ajay
+##Mentor :Ajay Kumar
 
 ## Project Overview
 

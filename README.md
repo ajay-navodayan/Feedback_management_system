@@ -1,2 +1,106 @@
-# Feedback_management_system
-This is feedback management System where students will enter feedback weekly and faculty will see feedback analysisi
+# Feedback Management System
+
+## Project Overview
+
+The Feedback Management System is a web application built with Python Flask that allows students to submit feedback for various courses. Faculty members can view and analyze the feedback, while administrators can oversee the feedback process. The system is integrated with Google OAuth for authentication and uses PostgreSQL as the database.
+
+## Features
+
+- **Google OAuth Authentication**: Secure login with Google accounts.
+- **Role-Based Access Control**: Different portals for students, faculty, and administrators.
+- **Automated Feedback Submission**: Students can submit feedback on Saturdays, and faculty can view feedback summaries.
+- **Feedback Analysis**: Faculty can view average ratings, distribution of ratings, and individual remarks.
+- **Responsive Design**: The application is mobile-friendly.
+- **Email Notifications**: Automated email reminders for students to submit feedback.
+
+## Technologies Used
+
+- **Backend**: Python Flask
+- **Database**: PostgreSQL
+- **Frontend**: HTML, CSS, JavaScript
+- **Authentication**: OAuth (Google)
+- **Scheduling**: `schedule` library
+- **Email**: `smtplib` for sending emails
+
+## Installation
+
+### Prerequisites
+
+- Python 3.x
+- PostgreSQL
+- Virtualenv (optional but recommended)
+
+### Setup Instructions
+
+1. **Clone the repository**:
+    ```bash
+    git clone https://github.com/yourusername/feedback-management-system.git
+    cd feedback-management-system
+    ```
+
+2. **Create and activate a virtual environment (optional but recommended)**:
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+    ```
+
+3. **Install the required Python packages**:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4. **Set up the PostgreSQL database**:
+    - Create a PostgreSQL database and user with appropriate privileges.
+    - Update the `db_config` dictionary in your Flask app with the database name, user, password, host, and port.
+
+5. **Set up environment variables**:
+    - Create a `.env` file in the root directory and add the following variables:
+    ```env
+    SECRET_KEY=your_secret_key
+    GOOGLE_CLIENT_ID=your_google_client_id
+    GOOGLE_CLIENT_SECRET=your_google_client_secret
+    ```
+
+6. **Run the Flask application**:
+    ```bash
+    flask run
+    ```
+
+7. **Access the application**:
+    - Visit `http://127.0.0.1:5000` in your web browser.
+
+## Usage
+
+### Student Portal
+
+- Students can log in using their Google accounts.
+- They can view their courses and submit feedback on Saturdays.
+- Students can view past feedback submissions.
+
+### Teacher Portal
+
+- Teachers can log in using their authorized email addresses.
+- They can view course-wise feedback, including average ratings, rating distributions, and individual remarks.
+- Teachers can also download feedback summaries.
+
+## Database Schema
+
+The project uses a PostgreSQL database with the following schema:
+
+- **feedback**: Stores feedback data, including course codes, student email, instructor email, feedback ratings, remarks, and submission dates.
+
+## Scheduled Tasks
+
+- **Automated Emails**: The system sends automated email reminders to students on Saturdays to submit feedback.
+
+### Scheduling Setup
+
+The scheduling for automated emails is handled using the `schedule` library in Python. A separate thread is used to run the scheduling tasks.
+
+## Contributing
+
+If you would like to contribute to the project, please fork the repository and submit a pull request. We welcome any contributions, including bug fixes, new features, and documentation improvements.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.

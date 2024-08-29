@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>course_form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        .rating {
+            margin: 5px -200px;
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            flex-direction: row-reverse;
+        }
+
+        .rating>input {
+            display: none;
+        }
+
+        .rating>label {
+            font-size: 2rem;
+            color: #444;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .rating>input:checked~label,
+        .rating>input:hover~label {
+            color: #F9BF3B;
+        }
+
+        .rating>input:checked+label:hover,
+        .rating>input:checked~label:hover,
+        .rating>label:hover~input:checked~label {
+            color: #F9BF3B;
+            /* color: #773bf9; */
+            text-shadow: 0 0 10px #F9BF3B;
+        }
+
+        .rating>input:checked~label:hover~input:checked~label {
+            color: #F9BF3B;
+            text-shadow: none;
+        }
+
+        body {
+            background-color: #fcf8f8;
+        }
+
+        .form-control {
+            display: block;
+            width: 50%;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+    <form data-course="{{ course_id }}">
+        <div class="form-group">
+            <label for="course{{ course_id }}_understanding_5">1. How well did you understand the concepts covered this
+                week?</label>
+            <div class="rating" id="course{{ course_id }}_understanding">
+                <input type="radio" name="understanding" id="course{{ course_id }}_understanding_5" value="5" required>
+
+                <label for="course{{ course_id }}_understanding_5">&#9733;</label>
+
+                <input type="radio" name="understanding" id="course{{ course_id }}_understanding_4" value="4">
+                <label for="course{{ course_id }}_understanding_4">&#9733;</label>
+
+                <input type="radio" name="understanding" id="course{{ course_id }}_understanding_3" value="3">
+                <label for="course{{ course_id }}_understanding_3">&#9733;</label>
+
+                <input type="radio" name="understanding" id="course{{ course_id }}_understanding_2" value="2">
+                <label for="course{{ course_id }}_understanding_2">&#9733;</label>
+
+                <input type="radio" name="understanding" id="course{{ course_id }}_understanding_1" value="1">
+                <label for="course{{ course_id }}_understanding_1">&#9733;</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="course{{ course_id }}_revision_5">2. How well are you able to solve the given practice problem?</label>
+            <div class="rating" id="course{{ course_id }}_revision">
+                <input type="radio" name="revision" id="course{{ course_id }}_revision_5" value="5" required>
+        
+                <label for="course{{ course_id }}_revision_5">&#9733;</label>
+
+                <input type="radio" name="revision" id="course{{ course_id }}_revision_4" value="4">
+                <label for="course{{ course_id }}_revision_4">&#9733;</label>
+
+                <input type="radio" name="revision" id="course{{ course_id }}_revision_3" value="3">
+                <label for="course{{ course_id }}_revision_3">&#9733;</label>
+
+                <input type="radio" name="revision" id="course{{ course_id }}_revision_2" value="2">
+                <label for="course{{ course_id }}_revision_2">&#9733;</label>
+
+                <input type="radio" name="revision" id="course{{ course_id }}_revision_1" value="1">
+                <label for="course{{ course_id }}_revision_1">&#9733;</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" id="course{{ course_id }}_suggestion" name="suggestion" rows="3"
+                placeholder="Enter your suggestion"></textarea>
+        </div>
+    </form>
+
+</body>
+
+</html>

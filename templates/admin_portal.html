@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Portal</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            margin-bottom: 40px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            font-weight: bold;
+            font-size: 2.5rem;
+            color: #333;
+        }
+
+        .card-subtitle {
+            font-size: 1.5rem;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: flex-end;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .custom-button {
+            background-color: #e2e9f0;
+            border-radius: 8px;
+            border: none;
+            color: #e91919;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 10px 20px;
+            text-decoration: none;
+            transition: background-color 200ms ease-in-out;
+            margin-left: 10px;
+        }
+
+        .custom-button:hover {
+            background-color: #0056b3;
+            color: white;
+            text-decoration: none;
+        }
+
+        .feedback-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            margin-bottom: 40px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feedback-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .feedback-container h2 {
+            color: #009879;
+            font-weight: bold;
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px;
+            text-align: left;
+            margin-top: 20px;
+            background-color: #fff;
+            color: #333;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .styled-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .styled-table tbody tr:hover {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+
+        .styled-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+
+        .jumbotron {
+            background-color: #343a40;
+            color: white;
+            padding: 2rem 1rem;
+            border-radius: 0.5rem;
+        }
+
+        h1.display-4 {
+            font-weight: 700;
+            font-size: 2.5rem;
+        }
+
+        p.lead {
+            font-size: 1.25rem;
+            font-weight: 300;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card text-center">
+        <div class="card-body">
+            <h1 class="card-title">Hello, {{ user_info['name'].split()[0] }}!</h1>
+            <h2 class="card-subtitle mb-2 text-muted">Welcome to the Admin Portal</h2>
+            <div class="button-container">
+                <a href="/" class="custom-button">Home</a>
+                <a href="/about_us" class="custom-button">About Us</a>
+            </div>
+        </div>
+    </div>
+
+    {% for email, data in feedback_data_by_email.items() %}
+    <div class="feedback-container">
+        <h2>Feedback for {{ instructor_names[email] }}</h2>
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Course Code</th>
+                    <th>Date</th>
+                    <th>Week</th>
+                    <th>Q1 Rating</th>
+                    <th>Q2 Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] or "N/A" }}</td>
+                    <td>{{ avg_ratings_by_email[email][0] }}</td>
+                    <td>{{ avg_ratings_by_email[email][1] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+</body>
+
+</html>

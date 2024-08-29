@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Restricted</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 1085px;
+            width: auto;
+            margin: 40px 0px;
+        }
+
+        .alert {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        h4 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #343a40;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        thead th {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 12px;
+        }
+
+        tbody td {
+            text-align: center;
+            padding: 12px;
+            color: #343a40;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+        .form-control {
+            width: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        {% if not is_saturday %}
+        <div class="alert alert-warning" role="alert">
+            Sorry! Student portal is only accessible on Saturdays.
+        </div>
+        {% endif %}
+        <h4>Your Previous Data</h4>
+        <form method="POST" action="{{ url_for('not_saturday') }}">
+            <div class="form-group">
+                <label for="num_feedback">Select Number of Feedback Entries:</label>
+                <select class="form-control" id="num_feedback" name="num_feedback" required>
+                    <option value="0" selected>No Data</option> <!-- Default to no data -->
+                    <option value="1">Last 1 week</option>
+                    <option value="3">Last 3 weeks</option>
+                    <option value="5">Last 5 weeks</option>
+                    <option value="all">All Data</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        {% if feedback_data %}
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Course Code</th>
+                    <th>Date of Feedback</th>
+                    <th>Week</th>
+                    <th>Understanding Rating</th>
+                    <th>Revision Rating</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for feedback in feedback_data %}
+                <tr>
+                    <td>{{ feedback[0] }}</td>
+                    <td>{{ feedback[1] }}</td>
+                    <td>{{ feedback[2] }}</td>
+                    <td>{{ feedback[3] }}</td>
+                    <td>{{ feedback[4] }}</td>
+                    <td>{{ feedback[5] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

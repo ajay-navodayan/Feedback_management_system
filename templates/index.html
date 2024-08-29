@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        /* CSS for the header/navbar */
+        .header {
+            background-image: linear-gradient(to bottom, #f2f2f2, #cccccc);
+            padding: 8px;
+            position: sticky;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            color: black;
+            font-weight: bold;
+            margin-left: 138px;
+        }
+
+        .navbar-nav {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .nav-link {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            color: #333;
+            padding: 10px 15px;
+            transition: color 0.3s, background-color 0.3s;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .slideshow-container {
+            max-width: 1000px;
+            position: relative;
+            margin: 22px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .mySlides {
+            display: none;
+        }
+
+        .mySlides img {
+            width: 100%;
+            border-radius: 10px;
+            height: 600px;
+        }
+
+        .prev,
+        .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            user-select: none;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 0 3px 3px 0;
+        }
+
+        a[href="/login"] {
+            text-decoration: none;
+        }
+
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover,
+        .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .text {
+            color: #f2f2f2;
+            font-size: 15px;
+            padding: 8px 12px;
+            position: absolute;
+            bottom: 8px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .btn-77 {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            padding: 10px 20px;
+            border-radius: 40px;
+            background-color: #d3cccc;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            outline: none;
+        }
+
+        .btn-77:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-77 img {
+            margin-right: 10px;
+        }
+
+        .numbertext {
+            color: #f2f2f2;
+            font-size: 12px;
+            padding: 8px 12px;
+            position: absolute;
+            top: 0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #f2f2f2;
+        }
+
+        .footer p,
+        .footer span {
+            margin: 0;
+        }
+
+        .dot {
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active,
+        .dot:hover {
+            background-color: #717171;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="d-flex align-items-center">
+            <img src="https://sitare.org/univ/assets/WebP/Sitare-University-Logo.webp" height="94" alt="Logo">
+            <h3>Feedback Management System</h3>
+        </div>
+        <ul class="navbar-nav ml-auto">
+            <li>
+                <a class="nav-link" href="/about_us">About Us</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Slideshow -->
+    <div class="slideshow-container">
+        <div class="mySlides">
+            <div class="numbertext">1 / 4</div>
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczM_pzvas-QO21jBURIf--EIN_Fooh763jd4GS39tChaB8H9UYzodp-DJFwLibT0qO7pwPQACJE5of4j5imzOzBd7KE87etLOtUS7x7kgWBtrjpFV2-04NW2eVbaD3vQEewPU1OlFtDJJ3-esERS2wrGOw=w1289-h860-s-no-gm"
+                alt="University Group Photo">
+            <!-- <div class="text">University Group Photo</div> -->
+        </div>
+        <div class="mySlides">
+            <div class="numbertext">2 / 4</div>
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczMZ_HiE4KwMQbY6tWuH82EKZ12kijec1wMZQahKmvbmHoMJB_X090Qsg79nOx-vb0-IZ1p7Db0uQh62HQHtu7VmUuiYTEACyGaRoEFKxikLw_h4SaWUgAej6yUnaZezslq_Pxvbr9h5Ltp8YlkMyFU8MQ=w1289-h860-s-no-gm"
+                alt="Batch(2023-2027)">
+            <!-- <div class="text">Batch(2023-2027)</div> -->
+        </div>
+        <div class="mySlides">
+            <div class="numbertext">3 / 4</div>
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczPuDPefPw-74WfLPIORT8J4ehTjsQCHTeBSt_fIS5jh1cTT1n7l_Iiqhs1SnwozqxfOiYSgSMl-70n1R4AYMhCsALsEfKwzwTT0A1zbONlO8WEggZeTytpa01cFMKwRnpTnepRwU03UghzPoeZ4c_x_rQ=w1910-h860-s-no-gm"
+                alt="Batch(2023-2027)">
+            <!-- <div class="text">Batch(2023-2027)</div> -->
+        </div>
+        <div class="mySlides">
+            <div class="numbertext">4 / 4</div>
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczO4h0ZiOPxzdYN_YbUVuF7yCvyEKUW4pNah6IoA1zI6U6rPNWUxSausNWFwwW-AtNaTPAW8fhWaJ3fv3p1YYC0alRaz8PSyON0YQ2F43dei8TQVnhIIXYKdscVZrfJVnw8i2z238iSgguXM5d9BoTFaTw=w1284-h855-s-no-gm"
+                alt="Semester End photo">
+            <!-- <div class="text">Semester End photo</div> -->
+        </div>
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+    <br>
+    <div style="text-align:center">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+    </div>
+
+    <!-- Login Form -->
+    <div class="container">
+        <a href="/login">
+            <button class="w-full flex items-center btn-77 border py-2 rounded-md hover:bg-muted/20 href="/login"">
+                <img src="https://tse3.mm.bing.net/th?id=OIP.PiYEnZOW9JkSaIqYa0AnuAHaHa&pid=Api&P=0&h=180" width="40px"
+                    alt="Google logo" class="mr-2">
+                Login with Google
+            </button>
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer text-center text-lg-start mt-5">
+            <p>© 2024 Sitare University. All rights reserved.</p>
+            <span>Address: 123 Ramswroop University, Lucknow, India</span>
+        </div>
+    </footer>
+
+    <script>
+        let slideIndex = 0;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("dot");
+
+        function showSlides() {
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) { slideIndex = 1 }
+            slides[slideIndex - 1].style.display = "block";
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            dots[slideIndex - 1].className += " active";
+            setTimeout(showSlides, 3000); // Change image every 3 seconds
+        }
+
+        showSlides();
+    </script>
+
+</body>
+
+</html>

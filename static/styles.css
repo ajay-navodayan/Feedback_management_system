@@ -1,0 +1,183 @@
+/* styles.css */
+
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+/* Header Styles */
+.header {
+    background-color: #cdc8c0c9;
+    color: #fff;
+    padding: 20px 0;
+}
+
+.d-inline-block align-top {
+    margin-left: 12px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+/* Navbar Styles */
+.navbar {
+    border-bottom: 1px solid #ddd;
+}
+
+.navbar-brand img {
+    margin-right: 10px;
+}
+
+.navbar-nav .nav-item .nav-link {
+    color: #555;
+    font-size: 1.1rem;
+    padding: 15px 20px;
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+    color: #007bff;
+}
+
+/* Container Styles */
+.container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.container h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #e52323;
+}
+
+/* Form Styles */
+.form-group label {
+    font-weight: bold;
+}
+
+.form-control {
+    border-radius: 5px;
+    border: 1px solid #1973ce;
+    padding: 10px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #343a40;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 50px;
+}
+
+footer p {
+    margin: 0;
+}
+
+footer span {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.9rem;
+}
+
+/* Rating Styles */
+.rating {
+    margin: 10px 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row-reverse;
+}
+
+.rating>input {
+    display: none;
+}
+
+.rating>label {
+    font-size: 2rem;
+    color: #444;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.rating>input:checked~label,
+.rating>input:hover~label {
+    color: #F9BF3B;
+}
+
+.rating>input:checked+label:hover,
+.rating>input:checked~label:hover,
+.rating>label:hover~input:checked~label {
+    color: #F9BF3B;
+    text-shadow: 0 0 10px #F9BF3B;
+}
+
+.rating>input:checked~label:hover~input:checked~label {
+    color: #F9BF3B;
+    text-shadow: none;
+}
+
+/* Specific Styles for Teacher Portal */
+.table-container {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container th, .table-container td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.table-container th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.pie-chart-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.overall-rating {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.scrollable-table {
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+body {
+    background-color: #a1a1a1;
+}

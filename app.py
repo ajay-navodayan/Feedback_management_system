@@ -17,10 +17,10 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', '43dce9f95d583e2537057a62713f
 
 # Database configuration
 db_config = {
-    'dbname': "dhp2024",
+    'dbname': "enter your database",
     'user': "postgres",
     'host':"localhost",
-    'password': "Ajay@123",
+    'password': "enter your password",
     'port': "5432"
 }
 
@@ -28,8 +28,8 @@ db_config = {
 oauth = OAuth(app)
 google = oauth.register(
     name='google',
-    client_id=os.getenv('GOOGLE_CLIENT_ID', '39257771502-vsoftekttnf9ga7l8i49oohlse57b29q.apps.googleusercontent.com'),
-    client_secret=os.getenv('GOOGLE_CLIENT_SECRET', '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'),
+    client_id=os.getenv('your_google_client_id'),
+    client_secret=os.getenv('GOOGLE_CLIENT_SECRET'),
     authorize_url='https://accounts.google.com/o/oauth2/auth',
     authorize_params=None,
     access_token_url='https://oauth2.googleapis.com/token',

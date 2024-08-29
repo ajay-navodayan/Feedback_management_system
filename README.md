@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-The Feedback Management System is a web application built with Python Flask that allows students to submit feedback for various courses. Faculty members can view and analyze the feedback, while administrators can oversee the feedback process. The system is integrated with Google OAuth for authentication and uses PostgreSQL as the database.
+The Feedback Management System is a web application built with Python Flask that allows students to submit feedback for various courses weekly. Faculty members can view and analyze the feedback. The system is integrated with Google OAuth for authentication and uses PostgreSQL as the database.
 
 ## Features
 
@@ -11,6 +11,7 @@ The Feedback Management System is a web application built with Python Flask that
 - **Automated Feedback Submission**: Students can submit feedback on Saturdays, and faculty can view feedback summaries.
 - **Feedback Analysis**: Faculty can view average ratings, distribution of ratings, and individual remarks.
 - **Responsive Design**: The application is mobile-friendly.
+- **Weekly access: Feedback can be entered only on saturday.
 - **Email Notifications**: Automated email reminders for students to submit feedback.
 
 ## Technologies Used
@@ -20,7 +21,7 @@ The Feedback Management System is a web application built with Python Flask that
 - **Frontend**: HTML, CSS, JavaScript
 - **Authentication**: OAuth (Google)
 - **Scheduling**: `schedule` library
-- **Email**: `smtplib` for sending emails
+  
 
 ## Installation
 
@@ -73,15 +74,17 @@ The Feedback Management System is a web application built with Python Flask that
 
 ### Student Portal
 
-- Students can log in using their Google accounts.
+- Students can log in using their Google accounts from sitare id only.
 - They can view their courses and submit feedback on Saturdays.
 - Students can view past feedback submissions.
 
 ### Teacher Portal
 
+- For accessing teacher portal you can enter your email in code where ajaynavodayan01 email is written and see results(for code review of teacher portal)
 - Teachers can log in using their authorized email addresses.
+
 - They can view course-wise feedback, including average ratings, rating distributions, and individual remarks.
-- Teachers can also download feedback summaries.
+  
 
 ## Database Schema
 
@@ -93,9 +96,7 @@ The project uses a PostgreSQL database with the following schema:
 
 - **Automated Emails**: The system sends automated email reminders to students on Saturdays to submit feedback.
 
-### Scheduling Setup
 
-The scheduling for automated emails is handled using the `schedule` library in Python. A separate thread is used to run the scheduling tasks.
 
 ## Contributing
 

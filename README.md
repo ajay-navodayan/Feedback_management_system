@@ -99,6 +99,9 @@ The project uses a PostgreSQL database with the following schema:
 
 - **Automated Emails**: The system sends automated email reminders to students on Saturdays to submit feedback.
 
+## Psql command for table
+    ```sql CREATE TABLE  feedback ( CourseCode2 VARCHAR(50), studentEmaiID VARCHAR(100), StudentName VARCHAR(100), DateOfFeedback DATE, Week INT, instructorEmailID VARCHAR(100), Question1Rating INT, Question2Rating INT, Remarks TEXT ); ```
+
 
 
 ## Contributing

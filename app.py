@@ -106,8 +106,11 @@ def authorize():
           # Role-based redirection based on email patterns it will check and render to respective portal
         if re.match(r'^su-.*@sitare\.org$', email):
             return redirect(url_for('dashboard'))
+            
+        # for aceess teacher portal (^[a-zA-Z0-9._%+-]+@sitare\.org$)
         elif re.match(r'^ajaynavodayan01@gmail\.com$', email):
             return redirect(url_for('teacher_portal'))
+        # for admin portal portal
         elif re.match(r'^krishu747@gmail\.com$', email):
             return redirect(url_for('admin_portal'))
         else:
@@ -171,7 +174,7 @@ def student_portal():
         return render_template('student_portal.html', user_info=user_info, feedback_submitted=True)
 
     
-      # Define courses based on the specific email pattern
+    # Define courses based on the specific email pattern
     courses = []
     if re.match(r'^su-230.*@sitare\.org$', user_info['email']):
         courses = [
@@ -202,7 +205,7 @@ def student_portal():
             {"course_id": 8, "course_name": "Course 8: Dr. Sonali Gupta"}
         ]
     print("Courses available for student:", courses)
-
+    # Adding the email
     emails = {
         "Dr. Kushal Shah": "ajaynavodayan01@gmail.com",
         "Dr. Sonika Thakral": "sonika@sitare.org",
@@ -335,7 +338,7 @@ def calculate_average_ratings_by_week(feedback_data):
         avg_ratings_by_week[week] = (avg_q1, avg_q2, feedback_count)
 
     return avg_ratings_by_week
-
+# Displaying the data in the form of graph
 def calculate_rating_distributions(feedback_data):
     rating_distribution_q1 = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
     rating_distribution_q2 = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
@@ -350,7 +353,7 @@ def calculate_rating_distributions(feedback_data):
 
 
 
-#this is teacher portal route 
+# teacher portal
 @app.route('/teacher_portal')
 def teacher_portal():
     user_info = session.get('user_info')
@@ -499,7 +502,7 @@ def create_feedback_table_if_not_exists():
 
 @app.route('/submit_all_forms', methods=['POST'])
 def submit_all_forms():
-    # again checking the student has already submitted feedback for today
+    # again checking the student has already submitted feedback for sameday.
     conn = get_db_connection()
     cur = conn.cursor()
     current_datetime = datetime.now(timezone.utc)
@@ -515,7 +518,7 @@ def submit_all_forms():
 
     instructor_emails = session.get('instructor_emails', {})
     data = request.form.to_dict(flat=False)
-    print("Received form data:", data)  # Debugging line
+    print("Received form data:", data) 
 
     feedback_entries = {}
     date_of_feedback = datetime.now().date()
@@ -607,14 +610,14 @@ def submit_all_forms():
         error_details = f"Error: {str(e)}"
         print(error_details)  # Debugging line
         return jsonify({"status": "error", "message": error_details}), 500
-
+# automate sending the email
 def send_email():
     sender_email = os.getenv('SENDER_EMAIL', 'your_email@example.com')
     sender_password = os.getenv('EMAIL_PASSWORD', 'your_password')
     smtp_server = 'smtp.example.com'
     smtp_port = 587
 
-    recipients = ["recipient1@example.com", "recipient2@example.com"]  # Add actual recipients here
+    recipients = "recipient1@example.com"  # Add actual recipients here
     subject = "Weekly Reminder"
     body = "This is your weekly reminder."
 

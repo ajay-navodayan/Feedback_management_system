@@ -129,11 +129,13 @@ def dashboard():
     if not user_info:
         # print("User not logged in. Redirecting to login.")
         return redirect(url_for('login'))
-
+    # for student portal excess
     if re.match(r'^su-.*@sitare\.org$', user_info['email']):
         return redirect(url_for('student_portal'))
+    # for aceess teacher portal (^[a-zA-Z0-9._%+-]+@sitare\.org$)
     elif re.match(r'^ajaynavodayan01@gmail\.com$', user_info['email']):
         return redirect(url_for('teacher_portal'))
+    # for admin portal excess
     elif re.match(r'^krishu747@gmail\.com$', user_info['email']):
         return redirect(url_for('admin_portal'))
     else:

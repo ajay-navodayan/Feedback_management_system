@@ -1,6 +1,6 @@
 # Feedback Management System
-- Developer: Puneet and Ajay
-- Mentor : Dr Kushal shah
+- Developer :- Puneet and Ajay
+- Mentor :- Dr Kushal shah
 
 ## Project Overview
 

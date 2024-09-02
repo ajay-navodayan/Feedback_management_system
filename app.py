@@ -62,7 +62,7 @@ def get_db_connection():
 
 
 
-# Home route that renders the index page
+# Home route that renders to the Home page
 @app.route('/')
 # @app.route('/home')
 def home():

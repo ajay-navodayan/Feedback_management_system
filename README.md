@@ -1,7 +1,7 @@
 # Feedback Management System
 - Developer :- Puneet and Ajay
 - Mentor :- Dr Kushal shah
-
+Note :- scheduler.py for automate the Email.
 ## Project Overview
 
 The Feedback Management System is a web application built with Python Flask that allows students to submit feedback for various courses weekly. Faculty members can view and analyze the feedback. The system is integrated with Google OAuth for authentication and uses PostgreSQL as the database.

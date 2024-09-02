@@ -87,6 +87,59 @@ The Feedback Management System is a web application built with Python Flask that
 
 - They can view course-wise feedback, including average ratings, rating distributions, and individual remarks.
 - There is also filter option available for filtering the data in table.
+
+## Adding a New Faculty and Course to the Student Portal
+
+  To add a new faculty member and course, follow these steps:
+
+  ### 1. Add the New Course Information
+
+  1. Open `student_portal routes`.
+  2. Add the new course to the `courses` list:
+  
+      ```python
+      courses.append({"course_id": NEW_COURSE_ID, "course_name": "COURSE_NAME: FACULTY_NAME"})
+      ```
+  
+  ### 2. Add the Faculty's Email
+  
+  1. Add the faculty's email to the `emails` dictionary:
+  
+      ```python
+      emails["FACULTY_NAME"] = "FACULTY_EMAIL"
+      ```
+  
+  ### 3. Add the Course ID in JavaScript
+  
+  1. Open the student portal page JavaScript file.
+  2. Add the `course_id` to the `courseIds` array:
+  
+      ```javascript
+      const courseIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 19, 35, NEW_COURSE_ID];
+      ```
+  
+  ### Example
+  
+  For "Data Structures: Dr. Arvind Kumar" with `course_id` 6 and email `arvind@sitare.org`:
+  
+  1. Add the course:
+  
+      ```python
+      courses.append({"course_id": 6, "course_name": "Data Structures: Dr. Arvind Kumar"})
+      ```
+  
+  2. Add the email:
+  
+      ```python
+      emails["Dr. Arvind Kumar"] = "arvind@sitare.org"
+      ```
+  
+  3. Update the JavaScript:
+  
+      ```javascript
+      const courseIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 19, 35, 6];
+      ```
+
   
 
 ## Database Schema

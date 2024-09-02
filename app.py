@@ -15,7 +15,7 @@ import time
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', '43dce9f95d583e2537057a62713f51ab56895991d7f6507cb464fe0751c9692a')
 
-# Database configuration
+# Database configuration  
 db_config = {
     'dbname': "enter your database",
     'user': "postgres",

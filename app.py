@@ -12,26 +12,28 @@ from email.mime.multipart import MIMEMultipart
 import schedule
 import threading
 import time
+from dotenv import load_dotenv
 
-# Initialize Flask application
+
+load_dotenv()
+
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', '43dce9f95d583e2537057a62713f51ab56895991d7f6507cb464fe0751c9692a')
+app.config['SECRET_KEY'] = '5x'
 
-# Database configuration settings
+# Database configuration
 db_config = {
-    'dbname': "demo_feedback",
-    'user': "demo_feedback_user",
+    'dbname': os.getenv('dbName'),
+    'user': os.getenv("user"),
     'host':"dpg-crbj6abqf0us73ddci60-a",
-    'password': "0mfhymx4PjdH9WBAdJdFi8oki6BjJuck",
+    'password': os.getenv("DBPWD"),
     'port': "5432"
 }
-
-# OAuth configuration for Google login
+# OAuth configuration
 oauth = OAuth(app)
 google = oauth.register(
     name='google',
-    client_id=os.getenv('your_google_client_id'),
-    client_secret=os.getenv('GOOGLE_CLIENT_SECRET'),
+    client_id=os.getenv('Client_id'),
+    client_secret=os.getenv('Client_secret'),
     authorize_url='https://accounts.google.com/o/oauth2/auth',
     authorize_params=None,
     access_token_url='https://oauth2.googleapis.com/token',
@@ -42,8 +44,6 @@ google = oauth.register(
     client_kwargs={'scope': 'openid email profile'},
     jwks_uri='https://www.googleapis.com/oauth2/v3/certs',
 )
-
-# Function to establish a connection with the PostgreSQL database
 
 def get_db_connection():
     try:
@@ -60,9 +60,6 @@ def get_db_connection():
         print("Error connecting to the database:", str(e))
         return None
 
-
-
-# Home route that renders to the Home page
 @app.route('/')
 # @app.route('/home')
 def home():
@@ -73,7 +70,6 @@ def home():
 def about():
     return render_template('about_us.html')
 
-# Route to initiate Google login and clear any existing session data
 @app.route('/login')
 def login():
     session.pop('user_info', None)
@@ -87,8 +83,6 @@ def login():
     session['state'] = state
     return google.authorize_redirect(redirect_uri, nonce=nonce, state=state)
 
-
-# Route for handling Google OAuth authorization
 @app.route('/authorize')
 def authorize():
     nonce = session.pop('nonce', None)
@@ -101,16 +95,11 @@ def authorize():
         name = user_info.get('name', 'User')  # Use 'User' as a default name if not present
         session['user_info'] = {'email': email, 'name': name}
         # print("User authorized:", user_info)
-        
 
-          # Role-based redirection based on email patterns it will check and render to respective portal
         if re.match(r'^su-.*@sitare\.org$', email):
             return redirect(url_for('dashboard'))
-            
-        # for aceess teacher portal (^[a-zA-Z0-9._%+-]+@sitare\.org$)
         elif re.match(r'^ajaynavodayan01@gmail\.com$', email):
             return redirect(url_for('teacher_portal'))
-        # for admin portal portal
         elif re.match(r'^krishu747@gmail\.com$', email):
             return redirect(url_for('admin_portal'))
         else:
@@ -120,7 +109,6 @@ def authorize():
         # print("Authorization failed.")
         return "Authorization failed", 400
 
-# Dashboard route with redirection based on user roles
 @app.route('/dashboard')
 def dashboard():
     user_info = session.get('user_info')
@@ -129,20 +117,17 @@ def dashboard():
     if not user_info:
         # print("User not logged in. Redirecting to login.")
         return redirect(url_for('login'))
-    # for student portal excess
+
     if re.match(r'^su-.*@sitare\.org$', user_info['email']):
         return redirect(url_for('student_portal'))
-    # for aceess teacher portal (^[a-zA-Z0-9._%+-]+@sitare\.org$)
     elif re.match(r'^ajaynavodayan01@gmail\.com$', user_info['email']):
         return redirect(url_for('teacher_portal'))
-    # for admin portal excess
     elif re.match(r'^krishu747@gmail\.com$', user_info['email']):
         return redirect(url_for('admin_portal'))
     else:
         # print("Invalid user role for email:", user_info['email'])
         return "Invalid user role", 400
 
-# Student portal route with course list based on email pattern
 @app.route('/student_portal')
 def student_portal():
     user_info = session.get('user_info')
@@ -154,29 +139,27 @@ def student_portal():
     
     # code for submitting the data on saturday
 
-    current_day = datetime.now(timezone.utc).weekday()
-    is_saturday = (current_day == 5)
+    # current_day = datetime.now(timezone.utc).weekday()
+    # is_saturday = (current_day == 5)
 
-    if not is_saturday:
-        print("Student portal is only accessible on Saturdays. Redirecting to home.")
-        return redirect(url_for('not_saturday'))
+    # if not is_saturday:
+    #     print("Student portal is only accessible on Saturdays. Redirecting to home.")
+    #     return redirect(url_for('not_saturday'))
 
-    # code for submitting the data one time in a day
+    # # code for submitting the data one time in a day
 
-    student_email_id = user_info.get('email')
-    current_datetime = datetime.now(timezone.utc)
-    current_date = current_datetime.date()
+    # student_email_id = user_info.get('email')
+    # current_datetime = datetime.now(timezone.utc)
+    # current_date = current_datetime.date()
 
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM feedback WHERE studentEmaiID = %s AND DateOfFeedback = %s", (student_email_id, current_date))
-    feedback_submitted = cursor.fetchone()
+    # conn = get_db_connection()
+    # cursor = conn.cursor()
+    # cursor.execute("SELECT * FROM feedback WHERE studentEmaiID = %s AND DateOfFeedback = %s", (student_email_id, current_date))
+    # feedback_submitted = cursor.fetchone()
 
-    if feedback_submitted:
-        return render_template('student_portal.html', user_info=user_info, feedback_submitted=True)
+    # if feedback_submitted:
+    #     return render_template('student_portal.html', user_info=user_info, feedback_submitted=True)
 
-    
-    # Define courses based on the specific email pattern
     courses = []
     if re.match(r'^su-230.*@sitare\.org$', user_info['email']):
         courses = [
@@ -207,7 +190,7 @@ def student_portal():
             {"course_id": 8, "course_name": "Course 8: Dr. Sonali Gupta"}
         ]
     print("Courses available for student:", courses)
-    # Adding the email
+
     emails = {
         "Dr. Kushal Shah": "ajaynavodayan01@gmail.com",
         "Dr. Sonika Thakral": "sonika@sitare.org",
@@ -230,7 +213,6 @@ def student_portal():
     return render_template('student_portal.html', user_info=user_info, courses=courses)
 
 
-# Route for handling requests on non-Saturdays with feedback data
 @app.route('/not_saturday', methods=['GET', 'POST'])
 def not_saturday():
     user_info = session.get('user_info')
@@ -264,8 +246,6 @@ def not_saturday():
                         studentEmaiID = %s
                     """
 
-
-                     # Filter feedback data by the number of weeks
                     if num_weeks.isdigit() and int(num_weeks) > 0:
                         num_weeks = int(num_weeks)
                         start_date = datetime.now() - timedelta(days=datetime.now().weekday() + num_weeks * 7)
@@ -289,8 +269,6 @@ def not_saturday():
     return render_template('saturday.html', user_info=user_info, feedback_data=feedback_data, is_saturday=is_saturday)
 
 
-
-# Fetch feedback data and group it by course and week
 def get_feedback_data(instructor_email):
     query = """
         SELECT CourseCode2, DateOfFeedback, StudentName, Week, Question1Rating, Question2Rating, Remarks, studentemaiid
@@ -321,7 +299,6 @@ def get_feedback_data(instructor_email):
 
 
 
-# Calculate average ratings by week from the feedback data
 def calculate_average_ratings_by_week(feedback_data):
     weekly_ratings = defaultdict(lambda: {'q1_total': 0, 'q2_total': 0, 'count': 0})
     for row in feedback_data:
@@ -340,7 +317,7 @@ def calculate_average_ratings_by_week(feedback_data):
         avg_ratings_by_week[week] = (avg_q1, avg_q2, feedback_count)
 
     return avg_ratings_by_week
-# Displaying the data in the form of graph
+
 def calculate_rating_distributions(feedback_data):
     rating_distribution_q1 = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
     rating_distribution_q2 = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
@@ -355,7 +332,6 @@ def calculate_rating_distributions(feedback_data):
 
 
 
-# teacher portal
 @app.route('/teacher_portal')
 def teacher_portal():
     user_info = session.get('user_info')
@@ -384,7 +360,7 @@ def teacher_portal():
             'distribution_q2': dist_q2,
             'latest_date': latest_date
         }
-        
+    # Prepare data for heartbeat-like graph
     # Extract weeks and average ratings for Q1
     weeks = []
     avg_q1_ratings = []
@@ -407,7 +383,7 @@ def teacher_portal():
 
 
 
- #this part is need some improvement and we will work on this later.   
+    
 @app.route('/admin_portal')
 def admin_portal():
     user_info = session.get('user_info')
@@ -504,23 +480,23 @@ def create_feedback_table_if_not_exists():
 
 @app.route('/submit_all_forms', methods=['POST'])
 def submit_all_forms():
-    # again checking the student has already submitted feedback for sameday.
-    conn = get_db_connection()
-    cur = conn.cursor()
-    current_datetime = datetime.now(timezone.utc)
-    current_date = current_datetime.date()
+    # again checking the student has already submitted feedback for today
+    # conn = get_db_connection()
+    # cur = conn.cursor()
+    # current_datetime = datetime.now(timezone.utc)
+    # current_date = current_datetime.date()
 
 
-    student_email_id = session.get('user_info', {}).get('email')
-    cur.execute("SELECT * FROM feedback WHERE studentEmaiID = %s AND DateOfFeedback = %s", (student_email_id, current_date))
-    feedback_submitted = cur.fetchone()
+    # student_email_id = session.get('user_info', {}).get('email')
+    # cur.execute("SELECT * FROM feedback WHERE studentEmaiID = %s AND DateOfFeedback = %s", (student_email_id, current_date))
+    # feedback_submitted = cur.fetchone()
     
-    if feedback_submitted:
-        return jsonify({"status": "already_submitted"})
+    # if feedback_submitted:
+    #     return jsonify({"status": "already_submitted"})
 
     instructor_emails = session.get('instructor_emails', {})
     data = request.form.to_dict(flat=False)
-    print("Received form data:", data) 
+    print("Received form data:", data)  # Debugging line
 
     feedback_entries = {}
     date_of_feedback = datetime.now().date()
@@ -612,14 +588,14 @@ def submit_all_forms():
         error_details = f"Error: {str(e)}"
         print(error_details)  # Debugging line
         return jsonify({"status": "error", "message": error_details}), 500
-# automate sending the email
+
 def send_email():
     sender_email = os.getenv('SENDER_EMAIL', 'your_email@example.com')
     sender_password = os.getenv('EMAIL_PASSWORD', 'your_password')
     smtp_server = 'smtp.example.com'
     smtp_port = 587
 
-    recipients = "recipient1@example.com"  # Add actual recipients here
+    recipients = ["recipient1@example.com", "recipient2@example.com"]  # Add actual recipients here
     subject = "Weekly Reminder"
     body = "This is your weekly reminder."
 

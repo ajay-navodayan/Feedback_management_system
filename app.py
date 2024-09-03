@@ -19,10 +19,10 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', '43dce9f95d583e2537057a62713f
 
 # Database configuration settings
 db_config = {
-    'dbname': "enter your database",
-    'user': "postgres",
-    'host':"localhost",
-    'password': "enter your password",
+    'dbname': "demo_feedback",
+    'user': "demo_feedback_user",
+    'host':"dpg-crbj6abqf0us73ddci60-a",
+    'password': "0mfhymx4PjdH9WBAdJdFi8oki6BjJuck",
     'port': "5432"
 }
 

@@ -40,7 +40,7 @@ google = oauth.register(
     access_token_params=None,
     refresh_token_url=None,
     refresh_token_params=None,
-    redirect_uri='https://feedback-management-system-my6t.onrender.com/authorize',
+    redirect_uri='http://127.0.0.1:5000/student_portal',
     client_kwargs={'scope': 'openid email profile'},
     jwks_uri='https://www.googleapis.com/oauth2/v3/certs',
 )

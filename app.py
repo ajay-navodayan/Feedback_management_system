@@ -162,34 +162,34 @@ def student_portal():
     # if feedback_submitted:
     #     return render_template('student_portal.html', user_info=user_info, feedback_submitted=True)
 
-    courses = []
+courses = []
     if re.match(r'^su-230.*@sitare\.org$', user_info['email']):
         courses = [
-            {"course_id": 1, "course_name": "Artificial intelligence: Dr. Pintu lohar"},
-            {"course_id": 2, "course_name": "DBMS: Dr. Pintu lohar"},
-            {"course_id": 3, "course_name": "ADSA: Dr. Prosenjit"},
-            {"course_id": 4, "course_name": "Probability for CS: Dr. Prosenjit"},
-            {"course_id": 5, "course_name": "Communication and Ethics: Ms. Preeti Shukla"},
-            {"course_id": 6, "course_name": "Java: Mr. Saurabh pandey"},
-            {"course_id": 7, "course_name": "Book Club and Social Emotional Intelligence: Ms. Riya Bangera"}
-            
+            {"course_id": 1, "course_name": "Artificial Intelligence", "instructor_name": "Dr. Pintu Lohar"},
+            {"course_id": 2, "course_name": "DBMS", "instructor_name": "Dr. Pintu Lohar"},
+            {"course_id": 3, "course_name": "ADSA", "instructor_name": "Dr. Prosenjit"},
+            {"course_id": 4, "course_name": "Probability for CS", "instructor_name": "Dr. Prosenjit"},
+            {"course_id": 5, "course_name": "Communication and Ethics", "instructor_name": "Ms. Preeti Shukla"},
+            {"course_id": 6, "course_name": "Java", "instructor_name": "Mr. Saurabh Pandey"},
+            {"course_id": 7, "course_name": "Book Club and Social Emotional Intelligence", "instructor_name": "Ms. Riya Bangera"}
         ]
+        
     elif re.match(r'^su-220.*@sitare\.org$', user_info['email']):
         courses = [
-            {"course_id": 35, "course_name": "Web Applications Development: Dr. Ambar Jain/Jeet"},
-            {"course_id": 2, "course_name": "OS Principles: Dr. Mainak/ Jeet"},
-            {"course_id": 3, "course_name": "Deep learning: Dr. Kushal shah/ Dr. Summet/ Dr.Anath"},
-            {"course_id": 4, "course_name": "Creative problem Solving: Ms Geeta/ Mr Harsh"},
-            {"course_id": 5, "course_name": "ITC: Dr. Anuja Agrawal"}
+            {"course_id": 35, "course_name": "Web Applications Development", "instructor_name": "Dr. Ambar Jain/Jeet"},
+            {"course_id": 2, "course_name": "OS Principles", "instructor_name": "Dr. Mainak/Jeet"},
+            {"course_id": 3, "course_name": "Deep Learning", "instructor_name": "Dr. Kushal Shah/Dr. Sumeet/Dr. Anath"},
+            {"course_id": 4, "course_name": "Creative Problem Solving", "instructor_name": "Ms. Geeta/Mr. Harsh"},
+            {"course_id": 5, "course_name": "ITC", "instructor_name": "Dr. Anuja Agrawal"}
         ]
+        
     elif re.match(r'^su-240.*@sitare\.org$', user_info['email']):
         courses = [
-             {"course_id": 8, "course_name": "Communication and Ethics: Ms. Preeti Shukla"},
-            {"course_id": 9, "course_name": "Introduction to computers: Dr. Achal Agarwal"},
-            {"course_id": 10, "course_name": "Linear Algebra: Dr. Shankho pal"},
-            {"course_id": 11, "course_name": "Programming Methodology in Python: Dr. Kushal shah"},
-            {"course_id": 12, "course_name": "Book Club and Social Emotional Intelligence: Ms. Riya Bangera"}
-          
+            {"course_id": 8, "course_name": "Communication and Ethics", "instructor_name": "Ms. Preeti Shukla"},
+            {"course_id": 9, "course_name": "Introduction to Computers", "instructor_name": "Dr. Achal Agarwal"},
+            {"course_id": 10, "course_name": "Linear Algebra", "instructor_name": "Dr. Shankho Pal"},
+            {"course_id": 11, "course_name": "Programming Methodology in Python", "instructor_name": "Dr. Kushal Shah"},
+            {"course_id": 12, "course_name": "Book Club and Social Emotional Intelligence", "instructor_name": "Ms. Riya Bangera"}
         ]
     print("Courses available for student:", courses)
 

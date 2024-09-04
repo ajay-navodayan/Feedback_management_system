@@ -166,9 +166,9 @@ def student_portal():
     if re.match(r'^su-230.*@sitare\.org$', user_info['email']):
         courses = [
             {"course_id": 1, "course_name": "Artificial intelligence: Dr. Pintu lohar"},
-            {"course_id": 2, "course_name": "DBMS: Dr. Pintu lohar"}
+            {"course_id": 2, "course_name": "DBMS: Dr. Pintu lohar"},
             {"course_id": 3, "course_name": "ADSA: Dr. Prosenjit"},
-            {"course_id": 4, "course_name": "Probability for CS: Dr. Prosenjit"}
+            {"course_id": 4, "course_name": "Probability for CS: Dr. Prosenjit"},
             {"course_id": 5, "course_name": "Communication and Ethics: Ms. Preeti Shukla"},
             {"course_id": 6, "course_name": "Java: Mr. Saurabh pandey"},
             {"course_id": 7, "course_name": "Book Club and Social Emotional Intelligence: Ms. Riya Bangera"}

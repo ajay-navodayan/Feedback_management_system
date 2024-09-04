@@ -265,7 +265,10 @@
     {% else %}
         <div class="course-container">
             {% for course in courses %}
-            <h2 class="course-header">{{ course.course_name }}</h2>
+                        <h2 class="course-header">
+                {{ course.course_name }} : 
+                <span class="instructor-name">{{ course.instructor_name }}</span>
+            </h2>
             <div id="form-container-{{ course.course_id }}" class="form-container">
                 <!-- {% include 'course_form.html' %} -->
             </div>

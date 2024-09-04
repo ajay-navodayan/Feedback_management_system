@@ -20,6 +20,13 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
+        .header img {
+            height: 94px;
+            /* Set the height of the logo */
+            /* max-width: 100%; */
+            /* Ensure the logo doesn't exceed its container width */
+        }
+
         .header h3 {
             font-family: 'Montserrat', sans-serif;
             font-size: 36px;
@@ -170,20 +177,237 @@
         .dot:hover {
             background-color: #717171;
         }
+
+        /* Media Queries for mobile devices */
+        @media (max-width: 1024px) {
+            .header {
+                padding: 10px;
+                box-shadow: none;
+                background-image: linear-gradient(to bottom, #f2f2f2, #e0e0e0);
+            }
+
+            .header img {
+                height: 80px;
+            }
+
+            .header h3 {
+                font-size: 32px;
+                margin-left: 10vw;
+            }
+
+            .navbar-nav {
+                margin-right: 10px;
+            }
+
+            .nav-link {
+                font-size: 17px;
+                padding: 9px 13px;
+            }
+
+            .footer {
+                padding: 18px;
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: center;
+                padding: 10px;
+            }
+
+            .header img {
+                height: 70px;
+            }
+
+            .header h3 {
+                font-size: 28px;
+                margin-left: 0;
+                text-align: center;
+            }
+
+            .navbar-nav {
+                margin-right: 0;
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 0;
+            }
+
+            .nav-link {
+                font-size: 16px;
+                padding: 8px 12px;
+                width: 100%;
+                text-align: center;
+            }
+
+            .slideshow-container {
+                max-width: 100%;
+                margin: 10px auto;
+                box-shadow: none;
+            }
+
+            .mySlides img {
+                height: auto;
+                border-radius: 5px;
+            }
+
+            .prev,
+            .next {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .container {
+                flex-direction: column;
+                padding: 15px;
+                margin-top: 10px;
+            }
+
+            .btn-77 {
+                width: 100%;
+                padding: 12px;
+                font-size: 16px;
+                justify-content: center;
+            }
+
+            .footer {
+                padding: 15px;
+                font-size: 14px;
+            }
+
+            .dot {
+                height: 10px;
+                width: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 12px;
+                background-color: #ffffff;
+                /* Clean white background */
+                border-bottom: 1px solid #e0e0e0;
+                /* Subtle border */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                /* Soft shadow for depth */
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                /* Space between items */
+                border-radius: 8px;
+                margin: 0 10px;
+            }
+
+            .header img {
+                height: 40px;
+                /* Larger logo for better visibility */
+                border-radius: 10%;
+                /* Circular logo */
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                /* Subtle shadow */
+                margin-right: 10px;
+                /* Space between logo and text */
+            }
+
+            .header h3 {
+                font-size: 17px;
+                /* Adjusted font size */
+                color: #333;
+                /* Darker text for contrast */
+                font-weight: bold;
+                margin: 0;
+                /* Remove margin for alignment */
+                text-align: center;
+                flex-grow: 1;
+                /* Allow the heading to grow and center */
+            }
+
+            .navbar-nav {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 0;
+                width: 100%;
+                /* Full width for better touch targets */
+            }
+
+            .nav-link {
+                font-size: 16px;
+                /* Adjusted font size */
+                color: #007bff;
+                /* Link color */
+                padding: 8px 15px;
+                /* Padding for clickable area */
+                border-radius: 20px;
+                /* Rounded button */
+                text-decoration: none;
+                background-color: #f8f9fa;
+                /* Background for better visibility */
+                transition: background-color 0.3s, color 0.3s;
+                display: block;
+                /* Block display for full-width buttons */
+                margin-bottom: 8px;
+                /* Space between links */
+            }
+
+            .nav-link:hover {
+                background-color: #e2e6ea;
+                /* Hover effect */
+                color: #0056b3;
+                /* Darker text on hover */
+            }
+
+            .btn-77 {
+                padding: 12px;
+                font-size: 16px;
+                border: none;
+                background-color: #007bff;
+                /* Primary button color */
+                color: #fff;
+                border-radius: 25px;
+                /* Rounded button */
+                text-align: center;
+                transition: background-color 0.3s;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .btn-77:hover {
+                background-color: #0056b3;
+                /* Darker button color on hover */
+            }
+
+            .footer {
+                padding: 15px;
+                font-size: 14px;
+                text-align: center;
+                background-color: #f8f9fa;
+                /* Light background for footer */
+                border-top: 1px solid #e0e0e0;
+                /* Top border */
+            }
+
+            .dot {
+                height: 8px;
+                width: 8px;
+            }
+        }
     </style>
 </head>
 
 <body>
     <!-- Header -->
     <div class="header">
-        <div class="d-flex align-items-center">
-            <img src="https://sitare.org/univ/assets/WebP/Sitare-University-Logo.webp" height="94" alt="Logo">
-            <h3 >Feedback Management System</h3>
+        <div class="d-flex align-items-center logo">
+            <img src="https://sitare.org/univ/assets/WebP/Sitare-University-Logo.webp" alt="Logo">
+            <h3>Feedback Management System</h3>
         </div>
         <ul class="navbar-nav ml-auto">
             <li>
                 <button style="border-radius:12%">
-                <a class="nav-link" href="/about_us">About Us</a>
+                    <a class="nav-link" href="/about_us">About Us</a>
                 </button>
             </li>
         </ul>
@@ -229,9 +453,8 @@
     <!-- Login Form -->
     <div class="container">
         <a href="/login">
-            <button class="w-full flex items-center btn-77 border py-2 rounded-md hover:bg-muted/20 href="/login"">
-                <img src="./static/google-icon.png" width="40px"
-                    alt="Google logo" class="mr-2">
+            <button class="w-full flex items-center btn-77 border py-2 rounded-md hover:bg-muted/20 href=" /login"">
+                <img src="./static/google-icon.png" width="40px" alt="Google logo" class="mr-2">
                 Login with Google
             </button>
         </a>

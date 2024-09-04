@@ -150,6 +150,7 @@ def authorize():
     else:
         # print("Authorization failed.")
         return "Authorization failed", 400
+        
 
 @app.route('/dashboard')
 def dashboard():

@@ -18,47 +18,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-# app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', '43dce9f95d583e2537057a62713f51ab56895991d7f6507cb464fe0751c9692a')
-
-# db_config = {
-#     'dbname': "dhp2024",
-#     'user': "postgres",
-#     'host':"localhost",
-#     'password': "Ajay@123",
-#     'port': "5432"
-# }
-
-# # OAuth configuration
-# oauth = OAuth(app)
-# google = oauth.register(
-#     name='google',
-#     client_id=os.getenv('GOOGLE_CLIENT_ID', '39257771502-vsoftekttnf9ga7l8i49oohlse57b29q.apps.googleusercontent.com'),
-#     client_secret=os.getenv('GOOGLE_CLIENT_SECRET', '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'),
-#     authorize_url='https://accounts.google.com/o/oauth2/auth',
-#     authorize_params=None,
-#     access_token_url='https://oauth2.googleapis.com/token',
-#     access_token_params=None,
-#     refresh_token_url=None,
-#     refresh_token_params=None,
-#     redirect_uri='http://127.0.0.1:5000/authorize',
-#     client_kwargs={'scope': 'openid email profile'},
-#     jwks_uri='https://www.googleapis.com/oauth2/v3/certs',
-# )
-
-# def get_db_connection():
-#     try:
-#         conn = psycopg2.connect(
-#             dbname=db_config['dbname'],
-#             user=db_config['user'],
-#             password=db_config['password'],
-#             host=db_config['host'],
-#             port=db_config['port']
-#         )
-#         print("Database connection established.")
-#         return conn
-#     except psycopg2.Error as e:
-#         print("Error connecting to the database:", str(e))
-#         return None
 
 app.config['SECRET_KEY'] = '5x'
 

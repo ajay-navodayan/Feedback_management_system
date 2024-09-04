@@ -191,7 +191,7 @@ elif re.match(r'^su-240.*@sitare\.org$', user_info['email']):
             {"course_id": 11, "course_name": "Programming Methodology in Python", "instructor_name": "Dr. Kushal Shah"},
             {"course_id": 12, "course_name": "Book Club and Social Emotional Intelligence", "instructor_name": "Ms. Riya Bangera"}
         ]
-    print("Courses available for student:", courses)
+print("Courses available for student:", courses)
 
     emails = {
         "Dr. Kushal Shah": "ajaynavodayan01@gmail.com",

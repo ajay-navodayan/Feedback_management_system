@@ -62,7 +62,7 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '5x'
 
-Database configuration
+# Database configuration
 db_config = {
     'dbname': os.getenv('dbName'),
     'user': os.getenv("user"),

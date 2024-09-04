@@ -202,7 +202,7 @@ def student_portal():
         }
     
     instructor_emails = {}
-        for course in courses:
+    for course in courses:
             course_name = course["course_name"]
             instructor_name = course_name.split(": ")[1]
             if instructor_name in emails:

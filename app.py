@@ -163,7 +163,7 @@ def student_portal():
     #     return render_template('student_portal.html', user_info=user_info, feedback_submitted=True)
 
 courses = []
-    if re.match(r'^su-230.*@sitare\.org$', user_info['email']):
+if re.match(r'^su-230.*@sitare\.org$', user_info['email']):
         courses = [
             {"course_id": 1, "course_name": "Artificial Intelligence", "instructor_name": "Dr. Pintu Lohar"},
             {"course_id": 2, "course_name": "DBMS", "instructor_name": "Dr. Pintu Lohar"},
@@ -174,7 +174,7 @@ courses = []
             {"course_id": 7, "course_name": "Book Club and Social Emotional Intelligence", "instructor_name": "Ms. Riya Bangera"}
         ]
         
-    elif re.match(r'^su-220.*@sitare\.org$', user_info['email']):
+elif re.match(r'^su-220.*@sitare\.org$', user_info['email']):
         courses = [
             {"course_id": 35, "course_name": "Web Applications Development", "instructor_name": "Dr. Ambar Jain/Jeet"},
             {"course_id": 2, "course_name": "OS Principles", "instructor_name": "Dr. Mainak/Jeet"},
@@ -183,7 +183,7 @@ courses = []
             {"course_id": 5, "course_name": "ITC", "instructor_name": "Dr. Anuja Agrawal"}
         ]
         
-    elif re.match(r'^su-240.*@sitare\.org$', user_info['email']):
+elif re.match(r'^su-240.*@sitare\.org$', user_info['email']):
         courses = [
             {"course_id": 8, "course_name": "Communication and Ethics", "instructor_name": "Ms. Preeti Shukla"},
             {"course_id": 9, "course_name": "Introduction to Computers", "instructor_name": "Dr. Achal Agarwal"},

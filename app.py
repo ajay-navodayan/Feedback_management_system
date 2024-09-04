@@ -18,29 +18,28 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '5x'
 
-# Database configuration
 db_config = {
-    'dbname': os.getenv('dbName'),
-    'user': os.getenv("user"),
-    'host':"dpg-crbj6abqf0us73ddci60-a",
-    'password': os.getenv("DBPWD"),
+    'dbname': "dhp2024",
+    'user': "postgres",
+    'host':"localhost",
+    'password': "Ajay@123",
     'port': "5432"
 }
+
 # OAuth configuration
 oauth = OAuth(app)
 google = oauth.register(
     name='google',
-    client_id=os.getenv('Client_id'),
-    client_secret=os.getenv('Client_secret'),
+    client_id=os.getenv('GOOGLE_CLIENT_ID', '39257771502-vsoftekttnf9ga7l8i49oohlse57b29q.apps.googleusercontent.com'),
+    client_secret=os.getenv('GOOGLE_CLIENT_SECRET', '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'),
     authorize_url='https://accounts.google.com/o/oauth2/auth',
     authorize_params=None,
     access_token_url='https://oauth2.googleapis.com/token',
     access_token_params=None,
     refresh_token_url=None,
     refresh_token_params=None,
-    redirect_uri='https://feedback-management-system-my6t.onrender.com/authorize',
+    redirect_uri='http://127.0.0.1:5000/authorize',
     client_kwargs={'scope': 'openid email profile'},
     jwks_uri='https://www.googleapis.com/oauth2/v3/certs',
 )
@@ -59,6 +58,48 @@ def get_db_connection():
     except psycopg2.Error as e:
         print("Error connecting to the database:", str(e))
         return None
+
+# app.config['SECRET_KEY'] = '5x'
+
+# Database configuration
+# db_config = {
+#     'dbname': os.getenv('dbName'),
+#     'user': os.getenv("user"),
+#     'host':"dpg-crbj6abqf0us73ddci60-a",
+#     'password': os.getenv("DBPWD"),
+#     'port': "5432"
+# }
+# # OAuth configuration
+# oauth = OAuth(app)
+# google = oauth.register(
+#     name='google',
+#     client_id=os.getenv('Client_id'),
+#     client_secret=os.getenv('Client_secret'),
+#     authorize_url='https://accounts.google.com/o/oauth2/auth',
+#     authorize_params=None,
+#     access_token_url='https://oauth2.googleapis.com/token',
+#     access_token_params=None,
+#     refresh_token_url=None,
+#     refresh_token_params=None,
+#     redirect_uri='https://feedback-management-system-my6t.onrender.com/authorize',
+#     client_kwargs={'scope': 'openid email profile'},
+#     jwks_uri='https://www.googleapis.com/oauth2/v3/certs',
+# )
+
+# def get_db_connection():
+#     try:
+#         conn = psycopg2.connect(
+#             dbname=db_config['dbname'],
+#             user=db_config['user'],
+#             password=db_config['password'],
+#             host=db_config['host'],
+#             port=db_config['port']
+#         )
+#         print("Database connection established.")
+#         return conn
+    # except psycopg2.Error as e:
+    #     print("Error connecting to the database:", str(e))
+    #     return None
 
 @app.route('/')
 # @app.route('/home')

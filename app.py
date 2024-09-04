@@ -165,31 +165,31 @@ def student_portal():
     courses = []
     if re.match(r'^su-230.*@sitare\.org$', user_info['email']):
         courses = [
-            {"course_id": 1, "course_name": "DHP: Dr. Kushal Shah"},
-            {"course_id": 2, "course_name": "DSA: Dr. Sonika Thakral"},
-            {"course_id": 3, "course_name": "MFC: Dr. Achal Agrawal"},
-            {"course_id": 4, "course_name": "Communication and Ethics: Ms. Preeti Shukla"},
-            {"course_id": 5, "course_name": "Book Club and Social Emotional Intelligence: Ms. Preeti Shukla"},
-            {"course_id": 6, "course_name": "Calculus: Dr. Achal Agrawal"}
+            {"course_id": 1, "course_name": "Artificial intelligence: Dr. Pintu lohar"},
+            {"course_id": 2, "course_name": "DBMS: Dr. Pintu lohar"}
+            {"course_id": 3, "course_name": "ADSA: Dr. Prosenjit"},
+            {"course_id": 4, "course_name": "Probability for CS: Dr. Prosenjit"}
+            {"course_id": 5, "course_name": "Communication and Ethics: Ms. Preeti Shukla"},
+            {"course_id": 6, "course_name": "Java: Mr. Saurabh pandey"},
+            {"course_id": 7, "course_name": "Book Club and Social Emotional Intelligence: Ms. Riya Bangera"}
+            
         ]
     elif re.match(r'^su-220.*@sitare\.org$', user_info['email']):
         courses = [
-            {"course_id": 35, "course_name": "Linear Algebra: Dr. Kushal Shah"},
-            {"course_id": 2, "course_name": "Intro. to Communication and Ethics: Ms. Preeti Shukla"},
-            {"course_id": 3, "course_name": "Book Club and Social Emotional Intelligence: Ms. Preeti Shukla"},
-            {"course_id": 4, "course_name": "Programming Methodology in Python: Dr. Kushal Shah"},
+            {"course_id": 35, "course_name": "Web Applications Development: Dr. Ambar Jain/Jeet"},
+            {"course_id": 2, "course_name": "OS Principles: Dr. Mainak/ Jeet"},
+            {"course_id": 3, "course_name": "Deep learning: Dr. Kushal shah/ Dr. Summet/ Dr.Anath"},
+            {"course_id": 4, "course_name": "Creative problem Solving: Ms Geeta/ Mr Harsh"},
             {"course_id": 5, "course_name": "ITC: Dr. Anuja Agrawal"}
         ]
     elif re.match(r'^su-240.*@sitare\.org$', user_info['email']):
         courses = [
-            {"course_id": 19, "course_name": "Course 19: Dr. Kushal Shah"},
-            {"course_id": 2, "course_name": "Course 2: Dr. Nayan Patel"},
-            {"course_id": 3, "course_name": "Course 3: Dr. Omkar Pandya"},
-            {"course_id": 4, "course_name": "Course 4: Dr. Parth Patel"},
-            {"course_id": 5, "course_name": "Course 5: Ms. Preeti Shukla"},
-            {"course_id": 6, "course_name": "Course 6: Dr. Rakesh Jain"},
-            {"course_id": 7, "course_name": "Course 7: Dr. Saurabh Shah"},
-            {"course_id": 8, "course_name": "Course 8: Dr. Sonali Gupta"}
+             {"course_id": 8, "course_name": "Communication and Ethics: Ms. Preeti Shukla"},
+            {"course_id": 9, "course_name": "Introduction to computers: Dr. Achal Agarwal"},
+            {"course_id": 10, "course_name": "Linear Algebra: Dr. Shankho pal"},
+            {"course_id": 11, "course_name": "Programming Methodology in Python: Dr. Kushal shah"},
+            {"course_id": 12, "course_name": "Book Club and Social Emotional Intelligence: Ms. Riya Bangera"}
+          
         ]
     print("Courses available for student:", courses)
 

@@ -162,56 +162,56 @@ def student_portal():
     # if feedback_submitted:
     #     return render_template('student_portal.html', user_info=user_info, feedback_submitted=True)
 
-courses = []
-if re.match(r'^su-230.*@sitare\.org$', user_info['email']):
-        courses = [
-            {"course_id": 1, "course_name": "Artificial Intelligence", "instructor_name": "Dr. Pintu Lohar"},
-            {"course_id": 2, "course_name": "DBMS", "instructor_name": "Dr. Pintu Lohar"},
-            {"course_id": 3, "course_name": "ADSA", "instructor_name": "Dr. Prosenjit"},
-            {"course_id": 4, "course_name": "Probability for CS", "instructor_name": "Dr. Prosenjit"},
-            {"course_id": 5, "course_name": "Communication and Ethics", "instructor_name": "Ms. Preeti Shukla"},
-            {"course_id": 6, "course_name": "Java", "instructor_name": "Mr. Saurabh Pandey"},
-            {"course_id": 7, "course_name": "Book Club and Social Emotional Intelligence", "instructor_name": "Ms. Riya Bangera"}
-        ]
-        
-elif re.match(r'^su-220.*@sitare\.org$', user_info['email']):
-        courses = [
-            {"course_id": 35, "course_name": "Web Applications Development", "instructor_name": "Dr. Ambar Jain/Jeet"},
-            {"course_id": 2, "course_name": "OS Principles", "instructor_name": "Dr. Mainak/Jeet"},
-            {"course_id": 3, "course_name": "Deep Learning", "instructor_name": "Dr. Kushal Shah/Dr. Sumeet/Dr. Anath"},
-            {"course_id": 4, "course_name": "Creative Problem Solving", "instructor_name": "Ms. Geeta/Mr. Harsh"},
-            {"course_id": 5, "course_name": "ITC", "instructor_name": "Dr. Anuja Agrawal"}
-        ]
-        
-elif re.match(r'^su-240.*@sitare\.org$', user_info['email']):
-        courses = [
-            {"course_id": 8, "course_name": "Communication and Ethics", "instructor_name": "Ms. Preeti Shukla"},
-            {"course_id": 9, "course_name": "Introduction to Computers", "instructor_name": "Dr. Achal Agarwal"},
-            {"course_id": 10, "course_name": "Linear Algebra", "instructor_name": "Dr. Shankho Pal"},
-            {"course_id": 11, "course_name": "Programming Methodology in Python", "instructor_name": "Dr. Kushal Shah"},
-            {"course_id": 12, "course_name": "Book Club and Social Emotional Intelligence", "instructor_name": "Ms. Riya Bangera"}
-        ]
-print("Courses available for student:", courses)
-
+    courses = []
+    if re.match(r'^su-230.*@sitare\.org$', user_info['email']):
+            courses = [
+                {"course_id": 1, "course_name": "Artificial Intelligence", "instructor_name": "Dr. Pintu Lohar"},
+                {"course_id": 2, "course_name": "DBMS", "instructor_name": "Dr. Pintu Lohar"},
+                {"course_id": 3, "course_name": "ADSA", "instructor_name": "Dr. Prosenjit"},
+                {"course_id": 4, "course_name": "Probability for CS", "instructor_name": "Dr. Prosenjit"},
+                {"course_id": 5, "course_name": "Communication and Ethics", "instructor_name": "Ms. Preeti Shukla"},
+                {"course_id": 6, "course_name": "Java", "instructor_name": "Mr. Saurabh Pandey"},
+                {"course_id": 7, "course_name": "Book Club and Social Emotional Intelligence", "instructor_name": "Ms. Riya Bangera"}
+            ]
+            
+    elif re.match(r'^su-220.*@sitare\.org$', user_info['email']):
+            courses = [
+                {"course_id": 35, "course_name": "Web Applications Development", "instructor_name": "Dr. Ambar Jain/Jeet"},
+                {"course_id": 2, "course_name": "OS Principles", "instructor_name": "Dr. Mainak/Jeet"},
+                {"course_id": 3, "course_name": "Deep Learning", "instructor_name": "Dr. Kushal Shah/Dr. Sumeet/Dr. Anath"},
+                {"course_id": 4, "course_name": "Creative Problem Solving", "instructor_name": "Ms. Geeta/Mr. Harsh"},
+                {"course_id": 5, "course_name": "ITC", "instructor_name": "Dr. Anuja Agrawal"}
+            ]
+            
+    elif re.match(r'^su-240.*@sitare\.org$', user_info['email']):
+            courses = [
+                {"course_id": 8, "course_name": "Communication and Ethics", "instructor_name": "Ms. Preeti Shukla"},
+                {"course_id": 9, "course_name": "Introduction to Computers", "instructor_name": "Dr. Achal Agarwal"},
+                {"course_id": 10, "course_name": "Linear Algebra", "instructor_name": "Dr. Shankho Pal"},
+                {"course_id": 11, "course_name": "Programming Methodology in Python", "instructor_name": "Dr. Kushal Shah"},
+                {"course_id": 12, "course_name": "Book Club and Social Emotional Intelligence", "instructor_name": "Ms. Riya Bangera"}
+            ]
+    print("Courses available for student:", courses)
+    
     emails = {
-        "Dr. Kushal Shah": "ajaynavodayan01@gmail.com",
-        "Dr. Sonika Thakral": "sonika@sitare.org",
-        "Dr. Achal Agrawal": "achal@sitare.org",
-        "Ms. Preeti Shukla": "preet@sitare.org",
-        "Dr. Amit Singhal": "amit@sitare.org"
-    }
-
+            "Dr. Kushal Shah": "ajaynavodayan01@gmail.com",
+            "Dr. Sonika Thakral": "sonika@sitare.org",
+            "Dr. Achal Agrawal": "achal@sitare.org",
+            "Ms. Preeti Shukla": "preet@sitare.org",
+            "Dr. Amit Singhal": "amit@sitare.org"
+        }
+    
     instructor_emails = {}
-    for course in courses:
-        course_name = course["course_name"]
-        instructor_name = course_name.split(": ")[1]
-        if instructor_name in emails:
-            instructor_emails[course["course_id"]] = emails[instructor_name]
-
+        for course in courses:
+            course_name = course["course_name"]
+            instructor_name = course_name.split(": ")[1]
+            if instructor_name in emails:
+                instructor_emails[course["course_id"]] = emails[instructor_name]
+    
     session['instructor_emails'] = instructor_emails
     print("Instructor emails:", instructor_emails)
-
-    # return render_template('student_portal.html', is_saturday=is_saturday, user_info=user_info, courses=courses)
+    
+        # return render_template('student_portal.html', is_saturday=is_saturday, user_info=user_info, courses=courses)
     return render_template('student_portal.html', user_info=user_info, courses=courses)
 
 

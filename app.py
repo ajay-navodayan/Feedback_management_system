@@ -99,7 +99,7 @@ def authorize():
 
         if re.match(r'^su-.*@sitare\.org$', email):
             return redirect(url_for('dashboard'))
-        elif re.match(r'^(kpuneet474@gmail\.com|kushal@sitare\.org|preeti@sitare\.org)$', user_info['email']):
+        elif re.match(r'^(kpuneet474@gmail\.com|kushal@sitare\.org|preeti@sitare\.org|ajaynavodayan01@gmail.com)$', user_info['email']):
             return redirect(url_for('teacher_portal'))
         elif re.match(r'^krishu747@gmail\.com$', email):
             return redirect(url_for('admin_portal'))

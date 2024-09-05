@@ -676,7 +676,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const charts = {};
-        
+    
             const fetchData = async () => {
                 try {
                     const response = await fetch('/teacher_portal?data=json');
@@ -687,22 +687,21 @@
                     alert('Failed to load data. Please try again later.');
                 }
             };
-        
+    
             const renderCharts = (data) => {
                 for (const [course, courseData] of Object.entries(data)) {
                     createPieChart(`ratingPieChartQ1_${course}`, courseData.distribution_q1, `${course} - Question 1`);
                     createPieChart(`ratingPieChartQ2_${course}`, courseData.distribution_q2, `${course} - Question 2`);
                 }
-                
             };
-            
+    
             const createPieChart = (canvasId, distributionData, title) => {
                 const ctx = document.getElementById(canvasId).getContext('2d');
-            
+    
                 if (charts[canvasId]) {
                     charts[canvasId].destroy();
                 }
-            
+    
                 const ratingPieData = {
                     labels: ['1', '2', '3', '4', '5'],
                     datasets: [{
@@ -725,92 +724,83 @@
                         borderWidth: 1
                     }]
                 };
-            
-                charts[canvasId] = new Chart(ctx, {
-                    type: 'pie',
-                    data: ratingPieData,
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            title: {
-                                display: true,
-                                text: title
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function (context) {
-                                        let students = context.raw;
-                                        let rating = context.label;
-                                        return `${students} students - ${rating} rating`;
-                                    },
-                                    title: function () {
-                                        return ''; // Hide the default title
-                                    }
+    
+                const ratingPieOptions = {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: title,
+                            font: {
+                                size: 16,
+                                weight: 'bold',
+                                color: '#007bff'
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    // Get the number of students and the rating
+                                    const students = context.raw;
+                                    const rating = context.label;
+                                    // Format the tooltip label
+                                    return `${students} students - ${rating} rating`;
+                                },
+                                title: function() {
+                                    return ''; // Hide the default title
                                 }
                             }
                         }
                     }
+                };
+    
+                charts[canvasId] = new Chart(ctx, {
+                    type: 'pie',
+                    data: ratingPieData,
+                    options: ratingPieOptions
                 });
             };
-        
-            
-        
-            fetchData();
-        
-            // DataTables initialization and filtering
-            $(document).ready(function() {
-                {% for course, data in course_summaries.items() %}
-                let table{{ course.replace(' ', '_') }} = $('#feedback-table-{{ course }}').DataTable({
-                    "pageLength": 10,
-                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                    "order": [[2, "desc"]], // Sort by Week column descending
-                    "columnDefs": [
-                        { "type": "date", "targets": 0 } // Assuming the date is in the first column
-                    ]
-                });
-        
-                // Populate week filter options
-                let weeks = [...new Set(table{{ course.replace(' ', '_') }}.column(2).data().toArray())];
-                weeks.sort((a, b) => b - a);
-                let weekSelect = $('#week-filter-{{ course }}');
-                weeks.forEach(week => {
-                    weekSelect.append($('<option>', {
-                        value: week,
-                        text: `Week ${week}`
-                    }));
-                });
-        
-                // Custom filtering function
-                $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
-                    if (settings.nTable.id !== 'feedback-table-{{ course }}') {
-                        return true;
-                    }
-                    
-                    let selectedRating = parseInt($('#min-rating-{{ course }}').val(), 10);
-                    let q1Rating = parseFloat(data[3]) || 0;
-                    let q2Rating = parseFloat(data[4]) || 0;
-                    let week = parseInt($('#week-filter-{{ course }}').val(), 10);
-                    let remarksFilter = $('#remarks-filter-{{ course }}').val();
-                    let hasRemarks = data[5].trim() !== '';
-        
-                    if ((isNaN(selectedRating) || q1Rating === selectedRating || q2Rating === selectedRating) &&
-                        (isNaN(week) || parseInt(data[2]) === week) &&
-                        (remarksFilter === '' || 
-                         (remarksFilter === 'with-remarks' && hasRemarks) || 
-                         (remarksFilter === 'without-remarks' && !hasRemarks))) {
-                        return true;
-                    }
-                    return false;
-                });
-        
-                // Event listener for filter changes
-                $('#min-rating-{{ course }}, #week-filter-{{ course }}, #remarks-filter-{{ course }}').change(function() {
-                    table{{ course.replace(' ', '_') }}.draw();
-                });
-        
-                {% endfor %}
+    
+            {% for course, data in course_summaries.items() %}
+            const table_{{ course }} = $('#feedback-table-{{ course }}').DataTable({
+                lengthMenu: [5, 10, 25, 50],
+                pageLength: 5,
+                responsive: true,
             });
+    
+            $('#min-rating-{{ course }}').on('change', function () {
+                const rating = $(this).val();
+                table_{{ course }}.column(3).search(rating).draw();
+                table_{{ course }}.column(4).search(rating).draw();
+            });
+    
+            $('#week-filter-{{ course }}').on('change', function () {
+                const week = $(this).val();
+                table_{{ course }}.column(2).search(week).draw();
+            });
+    
+            $('#remarks-filter-{{ course }}').on('change', function () {
+                const remarksFilter = $(this).val();
+                if (remarksFilter === 'with-remarks') {
+                    table_{{ course }}.column(5).search('.+', true, false).draw();
+                } else if (remarksFilter === 'without-remarks') {
+                    table_{{ course }}.column(5).search('^$', true, false).draw();
+                } else {
+                    table_{{ course }}.column(5).search('').draw();
+                }
+            });
+            {% endfor %}
+    
+            fetchData();
         });
-    </script>
+    </script>    
 </body>
-</html>
+</html>    

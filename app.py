@@ -122,7 +122,7 @@ def dashboard():
 
     if re.match(r'^su-.*@sitare\.org$', user_info['email']):
         return redirect(url_for('student_portal'))
-    elif re.match(r'^(kpuneet474@gmail\.com|kushal@sitare\.org|preeti@sitare\.org)$', user_info['email']):
+    elif re.match(r'^(kpuneet474@gmail\.com|kushal@sitare\.org|preeti@sitare\.org|ajaynavodayan01@gmail.com)$', user_info['email']):
         return redirect(url_for('teacher_portal'))
     elif re.match(r'^krishu747@gmail\.com$', user_info['email']):
         return redirect(url_for('admin_portal'))
@@ -337,7 +337,7 @@ def calculate_rating_distributions(feedback_data):
 @app.route('/teacher_portal')
 def teacher_portal():
     user_info = session.get('user_info')
-    if not user_info or not re.match(r'^(kpuneet474@gmail\.com|kushal@sitare\.org|preeti@sitare\.org)$', user_info['email']):
+    if not user_info or not re.match(r'^(kpuneet474@gmail\.com|kushal@sitare\.org|preeti@sitare\.org|ajaynavodayan01@gmail.com)$', user_info['email']):
         return redirect(url_for('login'))
 
     instructor_email = user_info['email']

@@ -104,6 +104,32 @@
         .footer .nav-link:hover {
             text-decoration: underline;
         }
+
+        .custom-btn {
+            background: linear-gradient(to right, lightgreen, mediumseagreen);
+            color: white;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+        }
+
+        .custom-btn:hover {
+            background: linear-gradient(to right, mediumseagreen, lightgreen);
+            transform: scale(1.05);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .custom-btn {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+
     </style>
 </head>
 
@@ -112,7 +138,7 @@
         <h1>About Us</h1>
         <p>Meet Our Experts</p>
         <nav class="nav justify-content-center">
-            <a href='/'><button style="background: linear-gradient(to right, lightgreen, mediumseagreen);">Go to Home</button></a>
+            <a href='/'><button class="custom-btn">Go to Home</button></a>
         </nav>
     </div>
 

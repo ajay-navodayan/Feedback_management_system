@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Redirect Page</title>
+	<style>
+		/* Global styling */
+		body {
+			font-family: 'Poppins', Arial, sans-serif;
+			text-align: center;
+			margin: 0;
+			padding: 0;
+			background: linear-gradient(to right, #6a11cb, #2575fc);
+			color: white;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			overflow: hidden;
+		}
+
+		/* Container for content */
+		.container {
+			background-color: rgba(255, 255, 255, 0.1);
+			padding: 50px;
+			border-radius: 15px;
+			box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+			backdrop-filter: blur(10px);
+			max-width: 500px;
+			width: 100%;
+		}
+
+		/* Header styling */
+		h1 {
+			font-size: 48px;
+			font-weight: bold;
+			margin-bottom: 20px;
+			letter-spacing: 2px;
+		}
+
+		/* Paragraph styling */
+		p {
+			font-size: 20px;
+			margin-bottom: 40px;
+		}
+
+		/* Button styling */
+		button {
+			padding: 15px 30px;
+			font-size: 20px;
+			margin: 15px;
+			cursor: pointer;
+			border: none;
+			border-radius: 50px;
+			background-color: #ff6f61;
+			color: white;
+			transition: all 0.4s ease;
+			width: 80%;
+		}
+
+		button:hover {
+			background-color: #ff9e80;
+			transform: scale(1.05);
+			box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+		}
+
+		/* For smaller screens */
+		@media (max-width: 768px) {
+			h1 {
+				font-size: 36px;
+			}
+
+			button {
+				font-size: 18px;
+				width: 90%;
+			}
+
+			p {
+				font-size: 18px;
+			}
+		}
+	</style>
+</head>
+<body>
+
+	<div class="container">
+		<h1>Welcome!</h1>
+		<p>Please select an option below:</p>
+
+		<!-- Conditionally render the "Fill the Form" button -->
+		{% if feedback_status == 'not_submitted' %}
+		<button onclick="window.location.href='/student_portal'">Fill the Form</button>
+		{% endif %}
+
+		<!-- Button that always appears -->
+		<button onclick="window.location.href='/not_saturday'">View Previous Feedback</button>
+	</div>
+
+</body>
+</html>

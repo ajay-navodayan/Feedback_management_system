@@ -121,7 +121,7 @@ def dashboard():
         return redirect(url_for('login'))
 
     if re.match(r'^su-.*@sitare\.org$', user_info['email']):
-        return redirect(url_for('student_portal'))
+        return render_template('Redirect_page.html')
     elif re.match(r'^(kpuneet474@gmail\.com|[\w._%+-]+@sitare\.org|ajaynavodayan01@gmail\.com)$', user_info['email']):
         return redirect(url_for('teacher_portal'))
     elif re.match(r'^krishu747@gmail\.com$', user_info['email']):

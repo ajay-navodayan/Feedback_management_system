@@ -198,6 +198,25 @@ def student_portal():
     return render_template('student_portal.html', user_info=user_info, courses=courses)
 # return render_template('student_portal.html', is_saturday=is_saturday, user_info=user_info, courses=courses)
 
+@app.route('/get_courses', methods=['GET'])
+def get_courses():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    # Fetch course IDs from the courses table
+    query = "SELECT course_id, course_name FROM courses"
+    cursor.execute(query)
+    courses = cursor.fetchall()
+    
+    cursor.close()
+    conn.close()
+    
+    # Format response
+    course_data = [{'course_id': course[0], 'course_name': course[1]} for course in courses]
+    
+    return jsonify({'courses': course_data})
+
+
 @app.route('/not_saturday', methods=['GET', 'POST'])
 def not_saturday():
     user_info = session.get('user_info')
@@ -254,25 +273,6 @@ def not_saturday():
     return render_template('saturday.html', user_info=user_info, feedback_data=feedback_data, is_saturday=is_saturday)
 
 
-@app.route('/get_courses', methods=['GET'])
-def get_courses():
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    
-    # Fetch course IDs from the courses table
-    query = "SELECT course_id, course_name FROM courses"
-    cursor.execute(query)
-    courses = cursor.fetchall()
-    
-    cursor.close()
-    conn.close()
-    
-    # Format response
-    course_data = [{'course_id': course[0], 'course_name': course[1]} for course in courses]
-    
-    return jsonify({'courses': course_data})
-    
-
 def get_feedback_data(instructor_email):
     query = """
         SELECT CourseCode2, DateOfFeedback, StudentName, Week, Question1Rating, Question2Rating, Remarks, studentemaiid
@@ -300,7 +300,6 @@ def get_feedback_data(instructor_email):
         grouped_remarks[course][week].append(remark)
     
     return feedback_data, grouped_remarks
-
 
 
 def calculate_average_ratings_by_week(feedback_data):
@@ -339,7 +338,7 @@ def calculate_rating_distributions(feedback_data):
 @app.route('/teacher_portal')
 def teacher_portal():
     user_info = session.get('user_info')
-    if not user_info or not re.match(r'^(kpuneet474@gmail\.com|[\w._%+-]+@sitare\.org|ajaynavodayan01@gmail\.com)$', user_info['email']):
+    if not user_info or not re.match(r'^(kpuneet474@gmail\.com|kushal@sitare\.org|preeti@sitare\.org)$', user_info['email']):
         return redirect(url_for('login'))
 
     instructor_email = user_info['email']
@@ -385,13 +384,11 @@ def teacher_portal():
         course_summaries=course_summaries
     )
 
-
-
-    
+  
 @app.route('/admin_portal')
 def admin_portal():
     user_info = session.get('user_info')
-    if not user_info or not re.match(r'^krishu747@gmail\.com$', user_info['email']):
+    if not user_info or not re.match(r'^kronit984@gmail\.com$', user_info['email']):
         return redirect(url_for('login'))
     
     feedback_data_by_email = {}
@@ -452,10 +449,10 @@ def logout():
     print("User logged out. Session cleared.")
     return redirect(url_for('home'))
 
-
-
-
-
+@app.route('/get_form/<course_id>')
+def get_form(course_id):
+    print(f"Rendering form for course ID: {course_id}")
+    return render_template('course_form.html', course_id=course_id)
 
 
 def create_tables_if_not_exists():
@@ -512,39 +509,6 @@ def create_tables_if_not_exists():
 
 # Call the function to create tables
 create_tables_if_not_exists()
-
-# def create_feedback_table_if_not_exists():
-#     create_table_query = """
-#     CREATE TABLE IF NOT EXISTS feedback (
-#         CourseCode2 VARCHAR(50),
-#         studentEmaiID VARCHAR(100),
-#         StudentName VARCHAR(100),
-#         DateOfFeedback DATE,
-#         Week INT,
-#         instructorEmailID VARCHAR(100),
-#         Question1Rating INT,
-#         Question2Rating INT,
-#         Remarks TEXT
-#     );
-#     """
-#     conn = get_db_connection()
-#     try:
-#         with conn.cursor() as cursor:
-#             cursor.execute(create_table_query)
-#             conn.commit()
-#             print("Table created or already exists.")
-#     except psycopg2.Error as e:
-#         print(f"Database error while creating table: {str(e)}")
-#     finally:
-#         conn.close()
-
-
-@app.route('/get_form/<course_id>')
-def get_form(course_id):
-    print(f"Rendering form for course ID: {course_id}")
-    return render_template('course_form.html', course_id=course_id)
-
-
 
 @app.route('/submit_all_forms', methods=['POST'])
 def submit_all_forms():

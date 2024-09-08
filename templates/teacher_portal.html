@@ -529,22 +529,17 @@
     <div class="container">
         <div class="header">
             <h2>Teacher Portal</h2>
-            <a href="/" class="home-button">Home</a>
+            <a href="/logout" class="home-button">logout</a>
         </div>
         <h2>Hi, {{ user_info.name.split()[0] }}!</h2>
 
         <div class="card mb-4">
             <div class="card-body">
                 <h3>Feedback Questions</h3>
-                <p>Question 1: How well did you understand the concepts covered this
-                    week?
-                <p>Question 2: How well are you able to solve the given practice problem?</p>
+                <p>Question 1: How well did you understand the concepts covered this week?</p>
+                <p>Question 2: How well are you able to solve the given practice problems?</p>
             </div>
         </div>
-
-
-
-
 
         <div class="table-container">
             <h2 class="text-center" style="padding-bottom: 10px;">Feedback Summary</h2>
@@ -577,37 +572,32 @@
         </div>
 
         <div class="col-md-12">
-            <div class="card ">
+            <div class="card">
                 <h2 style="color: #007bff; text-align: center;">Ratings Overview for the Last Two Weeks</h2>
                 {% for course, data in course_summaries.items() %}
                 <div class="row" style="justify-content: center;">
-                    <div class="col-md-12">
-                        <h3>Course-code : {{ course }}</h3>
-                    </div>
                     <div class="col-md-6" style="max-width: 43%">
                         <div class="card">
-                            <h4>Question 1</h4>
+                            <h4>{{ course }} - Question 1</h4>
                             <canvas id="ratingPieChartQ1_{{ course }}"></canvas>
                         </div>
                     </div>
                     <div class="col-md-6" style="max-width: 43%">
                         <div class="card">
-                            <h4>Question 2</h4>
+                            <h4>{{ course }} - Question 2</h4>
                             <canvas id="ratingPieChartQ2_{{ course }}"></canvas>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
             </div>
-           
         </div>
-        <!-- New table added -->
+
         <h2 class="text-center" style="padding-bottom: 10px;">Course-wise Individual Feedback</h2>
         {% for course, data in course_summaries.items() %}
         <div class="table-container">
             <h2 class="text-center" style="padding-bottom: 6px">Course code : {{ course }} </h2>
             <div class="filter-container mb-3">
-
                 <div class="row">
                     <div class="col-md-4">
                         <label for="min-rating-{{ course }}"> Rating:</label>
@@ -676,6 +666,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const charts = {};

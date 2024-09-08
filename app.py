@@ -141,79 +141,62 @@ def student_portal():
     
     # code for submitting the data on saturday
 
-    # current_day = datetime.now(timezone.utc).weekday()
-    # is_saturday = (current_day == 5)
+    current_day = datetime.now(timezone.utc).weekday()
+    is_saturday = (current_day == 5)
 
-    # if not is_saturday:
-    #     print("Student portal is only accessible on Saturdays. Redirecting to home.")
-    #     return redirect(url_for('not_saturday'))
+    if not is_saturday:
+        print("Student portal is only accessible on Saturdays. Redirecting to home.")
+        return redirect(url_for('not_saturday'))
 
     # # code for submitting the data one time in a day
 
-    # student_email_id = user_info.get('email')
-    # current_datetime = datetime.now(timezone.utc)
-    # current_date = current_datetime.date()
+    student_email_id = user_info.get('email')
+    current_datetime = datetime.now(timezone.utc)
+    current_date = current_datetime.date()
 
-    # conn = get_db_connection()
-    # cursor = conn.cursor()
-    # cursor.execute("SELECT * FROM feedback WHERE studentEmaiID = %s AND DateOfFeedback = %s", (student_email_id, current_date))
-    # feedback_submitted = cursor.fetchone()
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM feedback WHERE studentEmaiID = %s AND DateOfFeedback = %s", (student_email_id, current_date))
+    feedback_submitted = cursor.fetchone()
 
-    # if feedback_submitted:
-    #     return render_template('student_portal.html', user_info=user_info, feedback_submitted=True)
+    if feedback_submitted:
+        return render_template('student_portal.html', user_info=user_info, feedback_submitted=True)
+
+    # Determine batch pattern (e.g., su-230, su-220)
+    email = user_info.get('email')
+    batch_pattern = None
+    if re.match(r'^su-230.*@sitare\.org$', email):
+        batch_pattern = 'su-230'
+    elif re.match(r'^su-220.*@sitare\.org$', email):
+        batch_pattern = 'su-220'
+    elif re.match(r'^su-240.*@sitare\.org$', email):
+        batch_pattern = 'su-240'
+
+    # Fetch courses and instructor emails from the database
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Fetch courses for the given batch pattern
+    cursor.execute("""
+        SELECT courses.course_id, courses.course_name, instructors.instructor_name, instructors.instructor_email 
+        FROM courses
+        JOIN instructors ON courses.instructor_id = instructors.instructor_id
+        WHERE courses.batch_pattern = %s
+    """, (batch_pattern,))
+    course_data = cursor.fetchall()
 
     courses = []
-    if re.match(r'^su-230.*@sitare\.org$', user_info['email']):
-            courses = [
-                {"course_id": 1, "course_name": "Artificial Intelligence", "instructor_name": "Dr. Pintu Lohar"},
-                {"course_id": 2, "course_name": "DBMS", "instructor_name": "Dr. Pintu Lohar"},
-                {"course_id": 3, "course_name": "ADSA", "instructor_name": "Dr. Prosenjit"},
-                {"course_id": 4, "course_name": "Probability for CS", "instructor_name": "Dr. Prosenjit"},
-                {"course_id": 5, "course_name": "Communication and Ethics", "instructor_name": "Ms. Preeti Shukla"},
-                {"course_id": 6, "course_name": "Java", "instructor_name": "Mr. Saurabh Pandey"},
-                {"course_id": 7, "course_name": "Book Club and Social Emotional Intelligence", "instructor_name": "Ms. Riya Bangera"}
-            ]
-            
-    elif re.match(r'^su-220.*@sitare\.org$', user_info['email']):
-            courses = [
-                {"course_id": 35, "course_name": "Web Applications Development", "instructor_name": "Dr. Ambar Jain/Jeet"},
-                {"course_id": 2, "course_name": "OS Principles", "instructor_name": "Dr. Mainak/Jeet"},
-                {"course_id": 3, "course_name": "Deep Learning", "instructor_name": "Dr. Kushal Shah/Dr. Sumeet/Dr. Anath"},
-                {"course_id": 4, "course_name": "Creative Problem Solving", "instructor_name": "Ms. Geeta/Mr. Harsh"},
-                {"course_id": 5, "course_name": "ITC", "instructor_name": "Dr. Anuja Agrawal"}
-            ]
-            
-    elif re.match(r'^su-240.*@sitare\.org$', user_info['email']):
-            courses = [
-                {"course_id": 8, "course_name": "Communication and Ethics", "instructor_name": "Ms. Preeti Shukla"},
-                {"course_id": 9, "course_name": "Introduction to Computers", "instructor_name": "Dr. Achal Agarwal"},
-                {"course_id": 10, "course_name": "Linear Algebra", "instructor_name": "Dr. Shankho Pal"},
-                {"course_id": 11, "course_name": "Programming Methodology in Python", "instructor_name": "Dr. Kushal Shah"},
-                {"course_id": 12, "course_name": "Book Club and Social Emotional Intelligence", "instructor_name": "Ms. Riya Bangera"}
-            ]
-    print("Courses available for student:", courses)
-    
-    emails = {
-            "Dr. Kushal Shah": "kushal@sitare.org",
-            "Dr. Sonika Thakral": "kpuneet474@gmail.com",
-            "Dr. Achal Agrawal": "achal@sitare.org",
-            "Ms. Preeti Shukla": "preet@sitare.org",
-            "Dr. Amit Singhal": "amit@sitare.org"
-        }
-    
     instructor_emails = {}
-    for course in courses:
-            course_name = course["course_name"]
-            instructor_name = course["instructor_name"]
-            if instructor_name in emails:
-                instructor_emails[course["course_id"]] = emails[instructor_name]
-    
+
+    for course_id, course_name, instructor_name, instructor_email in course_data:
+        courses.append({"course_id": course_id, "course_name": f"{course_name}: {instructor_name}"})
+        instructor_emails[course_id] = instructor_email
+
     session['instructor_emails'] = instructor_emails
     print("Instructor emails:", instructor_emails)
-    
-        # return render_template('student_portal.html', is_saturday=is_saturday, user_info=user_info, courses=courses)
-    return render_template('student_portal.html', user_info=user_info, courses=courses)
 
+    return render_template('student_portal.html', user_info=user_info, courses=courses)
+# return render_template('student_portal.html', is_saturday=is_saturday, user_info=user_info, courses=courses)
 
 @app.route('/not_saturday', methods=['GET', 'POST'])
 def not_saturday():
@@ -270,6 +253,25 @@ def not_saturday():
 
     return render_template('saturday.html', user_info=user_info, feedback_data=feedback_data, is_saturday=is_saturday)
 
+
+@app.route('/get_courses', methods=['GET'])
+def get_courses():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    # Fetch course IDs from the courses table
+    query = "SELECT course_id, course_name FROM courses"
+    cursor.execute(query)
+    courses = cursor.fetchall()
+    
+    cursor.close()
+    conn.close()
+    
+    # Format response
+    course_data = [{'course_id': course[0], 'course_name': course[1]} for course in courses]
+    
+    return jsonify({'courses': course_data})
+    
 
 def get_feedback_data(instructor_email):
     query = """
@@ -450,51 +452,115 @@ def logout():
     print("User logged out. Session cleared.")
     return redirect(url_for('home'))
 
+
+
+
+
+
+
+def create_tables_if_not_exists():
+    create_instructors_table = """
+    CREATE TABLE IF NOT EXISTS instructors (
+        instructor_id SERIAL PRIMARY KEY,
+        instructor_name VARCHAR(255) UNIQUE NOT NULL,
+        instructor_email VARCHAR(255) NOT NULL
+    );
+    """
+
+    create_courses_table = """
+    CREATE TABLE IF NOT EXISTS courses (
+        course_id SERIAL PRIMARY KEY,
+        course_name VARCHAR(255) NOT NULL,
+        instructor_id INT REFERENCES instructors(instructor_id),
+        batch_pattern VARCHAR(255) NOT NULL
+    );
+    """
+
+    create_feedback_table = """
+    CREATE TABLE IF NOT EXISTS feedback (
+        feedback_id SERIAL PRIMARY KEY,
+        course_id INT REFERENCES courses(course_id),
+        studentEmailID VARCHAR(100),
+        studentName VARCHAR(100),
+        dateOfFeedback DATE,
+        week INT,
+        instructorEmailID VARCHAR(100),
+        question1Rating INT,
+        question2Rating INT,
+        remarks TEXT
+    );
+    """
+    
+    conn = get_db_connection()
+    if conn is None:
+        print("Could not establish a database connection.")
+        return
+
+    try:
+        with conn.cursor() as cursor:
+            # Execute table creation queries
+            cursor.execute(create_instructors_table)
+            cursor.execute(create_courses_table)
+            cursor.execute(create_feedback_table)
+            conn.commit()
+            print("Tables created or already exist.")
+    except psycopg2.Error as e:
+        print(f"Database error while creating tables: {e.pgcode} - {e.pgerror}")
+    finally:
+        if conn is not None:
+            conn.close()
+
+# Call the function to create tables
+create_tables_if_not_exists()
+
+# def create_feedback_table_if_not_exists():
+#     create_table_query = """
+#     CREATE TABLE IF NOT EXISTS feedback (
+#         CourseCode2 VARCHAR(50),
+#         studentEmaiID VARCHAR(100),
+#         StudentName VARCHAR(100),
+#         DateOfFeedback DATE,
+#         Week INT,
+#         instructorEmailID VARCHAR(100),
+#         Question1Rating INT,
+#         Question2Rating INT,
+#         Remarks TEXT
+#     );
+#     """
+#     conn = get_db_connection()
+#     try:
+#         with conn.cursor() as cursor:
+#             cursor.execute(create_table_query)
+#             conn.commit()
+#             print("Table created or already exists.")
+#     except psycopg2.Error as e:
+#         print(f"Database error while creating table: {str(e)}")
+#     finally:
+#         conn.close()
+
+
 @app.route('/get_form/<course_id>')
 def get_form(course_id):
     print(f"Rendering form for course ID: {course_id}")
     return render_template('course_form.html', course_id=course_id)
 
-def create_feedback_table_if_not_exists():
-    create_table_query = """
-    CREATE TABLE IF NOT EXISTS feedback (
-        CourseCode2 VARCHAR(50),
-        studentEmaiID VARCHAR(100),
-        StudentName VARCHAR(100),
-        DateOfFeedback DATE,
-        Week INT,
-        instructorEmailID VARCHAR(100),
-        Question1Rating INT,
-        Question2Rating INT,
-        Remarks TEXT
-    );
-    """
-    conn = get_db_connection()
-    try:
-        with conn.cursor() as cursor:
-            cursor.execute(create_table_query)
-            conn.commit()
-            print("Table created or already exists.")
-    except psycopg2.Error as e:
-        print(f"Database error while creating table: {str(e)}")
-    finally:
-        conn.close()
+
 
 @app.route('/submit_all_forms', methods=['POST'])
 def submit_all_forms():
     # again checking the student has already submitted feedback for today
-    # conn = get_db_connection()
-    # cur = conn.cursor()
-    # current_datetime = datetime.now(timezone.utc)
-    # current_date = current_datetime.date()
+    conn = get_db_connection()
+    cur = conn.cursor()
+    current_datetime = datetime.now(timezone.utc)
+    current_date = current_datetime.date()
 
 
-    # student_email_id = session.get('user_info', {}).get('email')
-    # cur.execute("SELECT * FROM feedback WHERE studentEmaiID = %s AND DateOfFeedback = %s", (student_email_id, current_date))
-    # feedback_submitted = cur.fetchone()
+    student_email_id = session.get('user_info', {}).get('email')
+    cur.execute("SELECT * FROM feedback WHERE studentEmaiID = %s AND DateOfFeedback = %s", (student_email_id, current_date))
+    feedback_submitted = cur.fetchone()
     
-    # if feedback_submitted:
-    #     return jsonify({"status": "already_submitted"})
+    if feedback_submitted:
+        return jsonify({"status": "already_submitted"})
 
     instructor_emails = session.get('instructor_emails', {})
     data = request.form.to_dict(flat=False)
@@ -505,7 +571,7 @@ def submit_all_forms():
     student_email_id = session.get('user_info', {}).get('email')
 
     # Define the start date for the first week
-    initial_start_date = datetime.strptime("2024-01-01", "%Y-%m-%d")
+    initial_start_date = datetime.strptime("2024-0-27", "%Y-%m-%d")
 
     # Create the week table
     week_table = [
@@ -563,7 +629,7 @@ def submit_all_forms():
 )
         )
     
-    create_feedback_table_if_not_exists()
+    create_tables_if_not_exists()
     
     try:
         conn = get_db_connection()
@@ -590,6 +656,11 @@ def submit_all_forms():
         error_details = f"Error: {str(e)}"
         print(error_details)  # Debugging line
         return jsonify({"status": "error", "message": error_details}), 500
+
+@app.route('/Redirect_page')
+def redirect_page():
+    feedback_status = request.args.get('feedback_status', 'not_submitted')
+    return render_template('redirect_page.html', feedback_status=feedback_status)
 
 def send_email():
     sender_email = os.getenv('SENDER_EMAIL', 'your_email@example.com')

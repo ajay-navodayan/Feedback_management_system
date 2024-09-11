@@ -337,10 +337,10 @@ def calculate_rating_distributions(feedback_data):
 @app.route('/teacher_portal')
 def teacher_portal():
     user_info = session.get('user_info')
-     elif re.match(r'^([\w._%+-]+@sitare\.org)$', user_info['email']):
+    if not user_info or not re.match(r'^([\w._%+-]+@sitare\.org)$', user_info['email']):
         return redirect(url_for('login'))
 
-instructor_email = user_info['email']
+    instructor_email = user_info['email']
     feedback_data, grouped_remarks = get_feedback_data(instructor_email)
 
     # Group feedback data by course
@@ -379,7 +379,6 @@ instructor_email = user_info['email']
         grouped_remarks=grouped_remarks,
         course_summaries=course_summaries
     )
-  
 @app.route('/admin_portal')
 def admin_portal():
     user_info = session.get('user_info')

@@ -11,17 +11,17 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import schedule
 import threading
-import time 
-from dotenv import load_dotenv 
+import time
+from dotenv import load_dotenv
 
 
 load_dotenv()
 
-app = Flask(__name__,static_folder='static')
+app = Flask(__name__)
 
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', '43dce9f95d583e2537057a62713f51ab56895991d7f6507cb464fe0751c9692a')
+app.config['SECRET_KEY'] = '5x'
 
-# # Database configuration
+# Database configuration
 db_config = {
     'dbname': os.getenv('dbName'),
     'user': os.getenv("user"),
@@ -29,22 +29,19 @@ db_config = {
     'password': os.getenv("DBPWD"),
     'port': "5432"
 }
-
-
-
 # OAuth configuration
 oauth = OAuth(app)
 google = oauth.register(
     name='google',
-    client_id=os.getenv('GOOGLE_CLIENT_ID', '39257771502-vsoftekttnf9ga7l8i49oohlse57b29q.apps.googleusercontent.com'),
-    client_secret=os.getenv('GOOGLE_CLIENT_SECRET', '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'),
+    client_id=os.getenv('Client_id'),
+    client_secret=os.getenv('Client_secret'),
     authorize_url='https://accounts.google.com/o/oauth2/auth',
     authorize_params=None,
     access_token_url='https://oauth2.googleapis.com/token',
     access_token_params=None,
     refresh_token_url=None,
     refresh_token_params=None,
-    redirect_uri='http://127.0.0.1:5000/authorize',
+    redirect_uri='https://feedback-management-system-my6t.onrender.com/authorize',
     client_kwargs={'scope': 'openid email profile'},
     jwks_uri='https://www.googleapis.com/oauth2/v3/certs',
 )
@@ -64,50 +61,8 @@ def get_db_connection():
         print("Error connecting to the database:", str(e))
         return None
 
-
-# app.config['SECRET_KEY'] = '5x'
-
-# Database configuration
-# db_config = {
-#     'dbname': os.getenv('dbName'),
-#     'user': os.getenv("user"),
-#     'host':"dpg-crbj6abqf0us73ddci60-a",
-#     'password': os.getenv("DBPWD"),
-#     'port': "5432"
-# }
-# # OAuth configuration
-# oauth = OAuth(app)
-# google = oauth.register(
-#     name='google',
-#     client_id=os.getenv('Client_id'),
-#     client_secret=os.getenv('Client_secret'),
-#     authorize_url='https://accounts.google.com/o/oauth2/auth',
-#     authorize_params=None,
-#     access_token_url='https://oauth2.googleapis.com/token',
-#     access_token_params=None,
-#     refresh_token_url=None,
-#     refresh_token_params=None,
-#     redirect_uri='http://127.0.0.1:5000/authorize',
-#     client_kwargs={'scope': 'openid email profile'},
-#     jwks_uri='https://www.googleapis.com/oauth2/v3/certs',
-# )
-
-# def get_db_connection():
-#     try:
-#         conn = psycopg2.connect(
-#             dbname=db_config['dbname'],
-#             user=db_config['user'],
-#             password=db_config['password'],
-#             host=db_config['host'],
-#             port=db_config['port']
-#         )
-#         print("Database connection established.")
-#         return conn
-#     except psycopg2.Error as e:
-#         print("Error connecting to the database:", str(e))
-#         return None
-
 @app.route('/')
+# @app.route('/home')
 def home():
     # print("Rendering home page.")
     return render_template('index.html')
@@ -144,16 +99,17 @@ def authorize():
 
         if re.match(r'^su-.*@sitare\.org$', email):
             return redirect(url_for('dashboard'))
-        elif re.match(r'^(kpuneet474@gmail\.com|^[a-zA-Z0-9._%+-]+@sitare\.org)$', user_info['email']):
+        elif re.match(r'^([\w._%+-]+@sitare\.org)$', user_info['email']):
             return redirect(url_for('teacher_portal'))
-        elif re.match(r'^kronit747@gmail\.com$', email):
+        elif re.match(r'^krishu747@gmail\.com$', email):
             return redirect(url_for('admin_portal'))
         else:
             # print("Invalid email format:", email)
-            return "Sorry! Login with Sitare Email id", 400
+            return "Invalid email format", 400
     else:
         # print("Authorization failed.")
         return "Authorization failed", 400
+        
 
 @app.route('/dashboard')
 def dashboard():
@@ -164,7 +120,7 @@ def dashboard():
 
     if re.match(r'^su-.*@sitare\.org$', user_info['email']):
         return render_template('Redirect_page.html')
-    elif re.match(r'^(kpuneet474@gmail\.com^[a-zA-Z0-9._%+-]+@sitare\.org)$',user_info['email']):
+    elif re.match(r'^([\w._%+-]+@sitare\.org)$', user_info['email']):
         return redirect(url_for('teacher_portal'))
     elif re.match(r'^krishu747@gmail\.com$', user_info['email']):
         return redirect(url_for('admin_portal'))
@@ -317,10 +273,11 @@ def not_saturday():
 
 def get_feedback_data(instructor_email):
     query = """
-        SELECT CourseCode2, DateOfFeedback, StudentName, Week, Question1Rating, Question2Rating, Remarks, studentemaiid
-        FROM feedback
-        WHERE instructorEmailID = %s AND DateOfFeedback >= (CURRENT_DATE - INTERVAL '2 weeks')
-        ORDER BY CourseCode2, Week, DateOfFeedback DESC
+        SELECT f.CourseCode2, f.DateOfFeedback, f.StudentName, f.Week, f.Question1Rating, f.Question2Rating, f.Remarks, f.studentemaiid, c.course_name
+        FROM feedback f
+        JOIN courses c ON f.CourseCode2 = CAST(c.course_id AS VARCHAR)
+        WHERE f.instructorEmailID = %s AND f.DateOfFeedback >= (CURRENT_DATE - INTERVAL '2 weeks')
+        ORDER BY f.CourseCode2, f.Week, f.DateOfFeedback DESC
     """
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -328,7 +285,7 @@ def get_feedback_data(instructor_email):
     feedback_data = cursor.fetchall()
     cursor.close()
     conn.close()
-    
+
     # Group remarks by course and week
     grouped_remarks = {}
     for row in feedback_data:
@@ -340,8 +297,9 @@ def get_feedback_data(instructor_email):
         if week not in grouped_remarks[course]:
             grouped_remarks[course][week] = []
         grouped_remarks[course][week].append(remark)
-    
+
     return feedback_data, grouped_remarks
+
 
 
 def calculate_average_ratings_by_week(feedback_data):
@@ -376,44 +334,40 @@ def calculate_rating_distributions(feedback_data):
     return rating_distribution_q1, rating_distribution_q2
 
 
-
 @app.route('/teacher_portal')
 def teacher_portal():
     user_info = session.get('user_info')
-    if not user_info or not re.match(r'^(kpuneet474@gmail\.com|^[a-zA-Z0-9._%+-]+@sitare\.org)$', user_info['email']):
+     elif re.match(r'^([\w._%+-]+@sitare\.org)$', user_info['email']):
         return redirect(url_for('login'))
 
-    instructor_email = user_info['email']
+instructor_email = user_info['email']
     feedback_data, grouped_remarks = get_feedback_data(instructor_email)
 
     # Group feedback data by course
     feedback_by_course = {}
     for row in feedback_data:
-        course_id = row[0]  # Assuming CourseCode2 is the first column
+        course_id = row[0]  # CourseCode2 (course ID remains unchanged)
+        course_name = row[8]  # Course name is now the last column
         if course_id not in feedback_by_course:
-            feedback_by_course[course_id] = []
-        feedback_by_course[course_id].append(row)
+            feedback_by_course[course_id] = {
+                'course_name': course_name,
+                'data': []
+            }
+        feedback_by_course[course_id]['data'].append(row)
 
     course_summaries = {}
-    for course_id, course_data in feedback_by_course.items():
+    for course_id, course_info in feedback_by_course.items():
+        course_data = course_info['data']
         avg_ratings = calculate_average_ratings_by_week(course_data)
         dist_q1, dist_q2 = calculate_rating_distributions(course_data)
-        latest_date = max(row[1] for row in course_data)  # Assuming date is the second column
+        latest_date = max(row[1] for row in course_data)  # DateOfFeedback remains at index 1
         course_summaries[course_id] = {
+            'course_name': course_info['course_name'],  # Now we have the course name
             'avg_ratings': avg_ratings,
             'distribution_q1': dist_q1,
             'distribution_q2': dist_q2,
             'latest_date': latest_date
         }
-    # Prepare data for heartbeat-like graph
-    # Extract weeks and average ratings for Q1
-    weeks = []
-    avg_q1_ratings = []
-    for course_id, summary in course_summaries.items():
-        for week, (avg_q1, avg_q2, feedback_count) in summary['avg_ratings'].items():
-            if week not in weeks:
-                weeks.append(week)
-                avg_q1_ratings.append(avg_q1)
 
     if request.args.get('data') == 'json':
         return jsonify(course_summaries)
@@ -425,7 +379,6 @@ def teacher_portal():
         grouped_remarks=grouped_remarks,
         course_summaries=course_summaries
     )
-
   
 @app.route('/admin_portal')
 def admin_portal():
@@ -702,4 +655,3 @@ if __name__ == '__main__':
     threading.Thread(target=schedule_emails, daemon=True).start()
     port = int(os.environ.get('PORT', 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
-

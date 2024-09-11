@@ -5,46 +5,21 @@ import schedule
 import time
 
 def send_email():
-    sender_email = "su-23028@sitare.org"
-    receiver_emails = ["su-cof2027@sitare.org"]  # List of recipient emails
-    subject = "Weekly Reminder for Feedback"
-
-    body = """
-    <html>
-    <body style="font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 0;">
-        <p style="margin-bottom: 20px;">
-            Dear Student,
-        </p>
-        <p style="margin-bottom: 20px;">
-            Just a quick reminder to complete this week's feedback form. 
-            Please submit it by the end of today otherwise you will miss the opportunity to share your thoughts for this week!
-        </p>
-        <p style="margin-bottom: 20px;">
-            Your feedback is valuable to us.
-        </p>
-        <p style="margin-bottom: 20px;">
-            Thank you for taking the time to provide your input!
-        </p>
-        <p>
-            Best regards,<br>
-            Feedback Management <br>
-            Sitare University
-        </p>
-    </body>
-    </html>
-    """
-
-    # Sending logic goes here
+    sender_email = "kpuneet474@gmail.com"
+    # receiver_emails = ["su-cof2027@sitare.org"]  # List of recipient emails
+    receiver_emails = ["su-cof2026@sitare.org"]  # List of recipient emails
+    subject = "Weekly Reminder for feedback"
+    body = "All students, please fill the feedback for all subjects."
 
     msg = MIMEMultipart()
     msg['From'] = sender_email
     msg['Subject'] = subject
-    msg.attach(MIMEText(body, 'html'))
+    msg.attach(MIMEText(body, 'plain'))
 
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
     smtp_user = sender_email
-    smtp_password = "cxmd uqma wvjl urie"  # Use app-specific password for security
+    smtp_password = "jyrj qnay shxz cfov"  # Use app-specific password for security
 
     try:
         server = smtplib.SMTP(smtp_server, smtp_port)
@@ -62,7 +37,7 @@ def send_email():
         print(f"Failed to send email: {str(e)}")
 
 # Schedule the email to be sent every Monday at 10:48 AM
-schedule.every().monday.at("22:52").do(send_email)
+schedule.every().monday.at("11:21").do(send_email)
 
 # Run the scheduling loop
 while True:

@@ -675,6 +675,7 @@
                 try {
                     const response = await fetch('/teacher_portal?data=json');
                     const data = await response.json();
+                    console.log(data);
                     renderCharts(data);
                 } catch (error) {
                     console.error('There was a problem with the fetch operation:', error);

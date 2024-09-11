@@ -43,12 +43,30 @@
 
         .nav-link {
             font-family: 'Montserrat', sans-serif;
-            font-size: 18px;
+            font-size: 1rem;
+            /* Relative font size */
             color: #333;
-            padding: 10px 15px;
+            /* Text color */
+            padding: 0.625em 1em;
+            /* Relative padding */
             transition: color 0.3s, background-color 0.3s;
-            border-radius: 5px;
+            /* Smooth transition for color and background */
+            border-radius: 0.3125em;
+            /* Relative border radius */
             text-decoration: none;
+            /* No underline */
+            display: inline-block;
+            /* Better for alignment with text and other inline elements */
+            box-sizing: border-box;
+            /* Include padding and border in element’s total width and height */
+        }
+
+        /* Hover effect */
+        .nav-link:hover {
+            background-color: #e0e0e0;
+            /* Light background on hover */
+            color: #000;
+            /* Darker text color on hover */
         }
 
         .slideshow-container {
@@ -234,11 +252,33 @@
                 padding: 10px 0;
             }
 
-            .nav-link {
-                font-size: 16px;
-                padding: 8px 12px;
-                width: 100%;
+            .nav-link-button {
+                padding: 15px 30px;
+                font-size: 20px;
+                cursor: pointer;
+                border: none;
+                border-radius: 50px;
+                background-color: #ff6f61;
+                color: white;
+                transition: all 0.4s ease;
+                text-decoration: none;
+                /* Remove underline */
+                display: inline-block;
                 text-align: center;
+                width: 80%;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            .nav-link-button:hover {
+                background-color: #ff9e80;
+                transform: scale(1.05);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            }
+
+            .nav-link-button:active {
+                background-color: #ff6f61;
+                transform: scale(0.98);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             }
 
             .slideshow-container {

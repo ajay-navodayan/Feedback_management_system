@@ -11,17 +11,17 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import schedule
 import threading
-import time
-from dotenv import load_dotenv
+import time 
+from dotenv import load_dotenv 
 
 
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__,static_folder='static')
 
-app.config['SECRET_KEY'] = '5x'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', '43dce9f95d583e2537057a62713f51ab56895991d7f6507cb464fe0751c9692a')
 
-# Database configuration
+# # Database configuration
 db_config = {
     'dbname': os.getenv('dbName'),
     'user': os.getenv("user"),
@@ -29,19 +29,22 @@ db_config = {
     'password': os.getenv("DBPWD"),
     'port': "5432"
 }
+
+
+
 # OAuth configuration
 oauth = OAuth(app)
 google = oauth.register(
     name='google',
-    client_id=os.getenv('Client_id'),
-    client_secret=os.getenv('Client_secret'),
+    client_id=os.getenv('GOOGLE_CLIENT_ID', '39257771502-vsoftekttnf9ga7l8i49oohlse57b29q.apps.googleusercontent.com'),
+    client_secret=os.getenv('GOOGLE_CLIENT_SECRET', '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'),
     authorize_url='https://accounts.google.com/o/oauth2/auth',
     authorize_params=None,
     access_token_url='https://oauth2.googleapis.com/token',
     access_token_params=None,
     refresh_token_url=None,
     refresh_token_params=None,
-    redirect_uri='https://feedback-management-system-my6t.onrender.com/authorize',
+    redirect_uri='http://127.0.0.1:5000/authorize',
     client_kwargs={'scope': 'openid email profile'},
     jwks_uri='https://www.googleapis.com/oauth2/v3/certs',
 )
@@ -61,8 +64,50 @@ def get_db_connection():
         print("Error connecting to the database:", str(e))
         return None
 
+
+# app.config['SECRET_KEY'] = '5x'
+
+# Database configuration
+# db_config = {
+#     'dbname': os.getenv('dbName'),
+#     'user': os.getenv("user"),
+#     'host':"dpg-crbj6abqf0us73ddci60-a",
+#     'password': os.getenv("DBPWD"),
+#     'port': "5432"
+# }
+# # OAuth configuration
+# oauth = OAuth(app)
+# google = oauth.register(
+#     name='google',
+#     client_id=os.getenv('Client_id'),
+#     client_secret=os.getenv('Client_secret'),
+#     authorize_url='https://accounts.google.com/o/oauth2/auth',
+#     authorize_params=None,
+#     access_token_url='https://oauth2.googleapis.com/token',
+#     access_token_params=None,
+#     refresh_token_url=None,
+#     refresh_token_params=None,
+#     redirect_uri='http://127.0.0.1:5000/authorize',
+#     client_kwargs={'scope': 'openid email profile'},
+#     jwks_uri='https://www.googleapis.com/oauth2/v3/certs',
+# )
+
+# def get_db_connection():
+#     try:
+#         conn = psycopg2.connect(
+#             dbname=db_config['dbname'],
+#             user=db_config['user'],
+#             password=db_config['password'],
+#             host=db_config['host'],
+#             port=db_config['port']
+#         )
+#         print("Database connection established.")
+#         return conn
+#     except psycopg2.Error as e:
+#         print("Error connecting to the database:", str(e))
+#         return None
+
 @app.route('/')
-# @app.route('/home')
 def home():
     # print("Rendering home page.")
     return render_template('index.html')
@@ -99,36 +144,33 @@ def authorize():
 
         if re.match(r'^su-.*@sitare\.org$', email):
             return redirect(url_for('dashboard'))
-        elif re.match(r'^([\w._%+-]+@sitare\.org)$', user_info['email']):
+        elif re.match(r'^(kpuneet474@gmail\.com)$', user_info['email']):
             return redirect(url_for('teacher_portal'))
-        elif re.match(r'^krishu747@gmail\.com$', email):
+        elif re.match(r'^kronit747@gmail\.com$', email):
             return redirect(url_for('admin_portal'))
         else:
             # print("Invalid email format:", email)
-            return "Invalid email format", 400
+            return "Sorry! Login with Sitare Email id", 400
     else:
         # print("Authorization failed.")
         return "Authorization failed", 400
-        
 
 @app.route('/dashboard')
 def dashboard():
     user_info = session.get('user_info')
-    # print("Accessing dashboard for user:", user_info)
 
     if not user_info:
-        # print("User not logged in. Redirecting to login.")
         return redirect(url_for('login'))
 
     if re.match(r'^su-.*@sitare\.org$', user_info['email']):
         return render_template('Redirect_page.html')
-    elif re.match(r'^(kpuneet474@gmail\.com|[\w._%+-]+@sitare\.org|ajaynavodayan01@gmail\.com)$', user_info['email']):
+    elif re.match(r'^(kpuneet474@gmail\.com|kushal@sitare\.org|preeti@sitare\.org)$', user_info['email']):
         return redirect(url_for('teacher_portal'))
     elif re.match(r'^krishu747@gmail\.com$', user_info['email']):
         return redirect(url_for('admin_portal'))
     else:
-        # print("Invalid user role for email:", user_info['email'])
         return "Invalid user role", 400
+
 
 @app.route('/student_portal')
 def student_portal():
@@ -141,26 +183,26 @@ def student_portal():
     
     # code for submitting the data on saturday
 
-    current_day = datetime.now(timezone.utc).weekday()
-    is_saturday = (current_day == 5)
+    # current_day = datetime.now(timezone.utc).weekday()
+    # is_saturday = (current_day == 5)
 
-    if not is_saturday:
-        print("Student portal is only accessible on Saturdays. Redirecting to home.")
-        return redirect(url_for('not_saturday'))
+    # if not is_saturday:
+    #     print("Student portal is only accessible on Saturdays. Redirecting to home.")
+    #     return redirect(url_for('not_saturday'))
 
     # # code for submitting the data one time in a day
 
-    student_email_id = user_info.get('email')
-    current_datetime = datetime.now(timezone.utc)
-    current_date = current_datetime.date()
+    # student_email_id = user_info.get('email')
+    # current_datetime = datetime.now(timezone.utc)
+    # current_date = current_datetime.date()
 
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM feedback WHERE studentEmaiID = %s AND DateOfFeedback = %s", (student_email_id, current_date))
-    feedback_submitted = cursor.fetchone()
+    # conn = get_db_connection()
+    # cursor = conn.cursor()
+    # cursor.execute("SELECT * FROM feedback WHERE studentEmaiID = %s AND DateOfFeedback = %s", (student_email_id, current_date))
+    # feedback_submitted = cursor.fetchone()
 
-    if feedback_submitted:
-        return render_template('student_portal.html', user_info=user_info, feedback_submitted=True)
+    # if feedback_submitted:
+    #     return render_template('student_portal.html', user_info=user_info, feedback_submitted=True)
 
     # Determine batch pattern (e.g., su-230, su-220)
     email = user_info.get('email')
@@ -169,8 +211,8 @@ def student_portal():
         batch_pattern = 'su-230'
     elif re.match(r'^su-220.*@sitare\.org$', email):
         batch_pattern = 'su-220'
-    elif re.match(r'^su-240.*@sitare\.org$', email):
-        batch_pattern = 'su-240'
+    elif re.match(r'^su-24.*@sitare\.org$', email):
+        batch_pattern = 'su-24'
 
     # Fetch courses and instructor emails from the database
     conn = get_db_connection()
@@ -454,7 +496,6 @@ def get_form(course_id):
     print(f"Rendering form for course ID: {course_id}")
     return render_template('course_form.html', course_id=course_id)
 
-
 def create_tables_if_not_exists():
     create_instructors_table = """
     CREATE TABLE IF NOT EXISTS instructors (
@@ -489,10 +530,6 @@ def create_tables_if_not_exists():
     """
     
     conn = get_db_connection()
-    if conn is None:
-        print("Could not establish a database connection.")
-        return
-
     try:
         with conn.cursor() as cursor:
             # Execute table creation queries
@@ -502,29 +539,29 @@ def create_tables_if_not_exists():
             conn.commit()
             print("Tables created or already exist.")
     except psycopg2.Error as e:
-        print(f"Database error while creating tables: {e.pgcode} - {e.pgerror}")
+        print(f"Database error while creating tables: {str(e)}")
     finally:
-        if conn is not None:
-            conn.close()
+        conn.close()
 
 # Call the function to create tables
 create_tables_if_not_exists()
 
+
 @app.route('/submit_all_forms', methods=['POST'])
 def submit_all_forms():
     # again checking the student has already submitted feedback for today
-    conn = get_db_connection()
-    cur = conn.cursor()
-    current_datetime = datetime.now(timezone.utc)
-    current_date = current_datetime.date()
+    # conn = get_db_connection()
+    # cur = conn.cursor()
+    # current_datetime = datetime.now(timezone.utc)
+    # current_date = current_datetime.date()
 
 
-    student_email_id = session.get('user_info', {}).get('email')
-    cur.execute("SELECT * FROM feedback WHERE studentEmaiID = %s AND DateOfFeedback = %s", (student_email_id, current_date))
-    feedback_submitted = cur.fetchone()
+    # student_email_id = session.get('user_info', {}).get('email')
+    # cur.execute("SELECT * FROM feedback WHERE studentEmaiID = %s AND DateOfFeedback = %s", (student_email_id, current_date))
+    # feedback_submitted = cur.fetchone()
     
-    if feedback_submitted:
-        return jsonify({"status": "already_submitted"})
+    # if feedback_submitted:
+    #     return jsonify({"status": "already_submitted"})
 
     instructor_emails = session.get('instructor_emails', {})
     data = request.form.to_dict(flat=False)
@@ -535,7 +572,7 @@ def submit_all_forms():
     student_email_id = session.get('user_info', {}).get('email')
 
     # Define the start date for the first week
-    initial_start_date = datetime.strptime("2024-0-27", "%Y-%m-%d")
+    initial_start_date = datetime.strptime("2024-08-27", "%Y-%m-%d")
 
     # Create the week table
     week_table = [
@@ -660,7 +697,9 @@ def schedule_emails():
         time.sleep(60)  # wait one minute
 
 if __name__ == '__main__':
-    threading.Thread(target=schedule_emails, daemon=True).start()
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host="0.0.0.0", port=port, debug=True)
+     app.run(debug=True)
+
+    # threading.Thread(target=schedule_emails, daemon=True).start()
+    # port = int(os.environ.get('PORT', 5000))
+    # app.run(host="0.0.0.0", port=port, debug=True)
 

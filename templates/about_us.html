@@ -15,94 +15,45 @@
         }
 
         .hero-section {
-            background-image: linear-gradient(to bottom, #343a40, #6c757d);
-            padding: 30px 0;
+            background-image: url('https://images.unsplash.com/photo-1506748686214e9df14e2b1a3e9-27d603f1d945?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDJ8fGZvcmVzdHxlbnwwfHx8fDE2NTU2NjE0NzY&ixlib=rb-1.2.1&q=80&w=1080');
+            background-size: cover;
+            background-position: center;
+            padding: 60px 0;
             text-align: center;
             color: white;
+            position: relative;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hero-section::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
         }
 
         .hero-section h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            z-index: 2;
+            position: relative;
         }
 
         .hero-section p {
-            font-size: 20px;
-            margin-bottom: 40px;
-        }
-
-        .nav a {
-            color: white;
             font-size: 18px;
-            margin: 0 15px;
-            text-decoration: none;
-            transition: color 0.3s;
+            margin-bottom: 30px;
+            z-index: 2;
+            position: relative;
         }
 
-        .nav a:hover {
-            color: #ffc107;
-        }
-
-        .profile-card {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-            transition: transform 0.3s ease;
-        }
-
-        .profile-card:hover {
-            transform: scale(1.05);
-        }
-
-        .profile-card img {
-            border-radius: 50%;
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .profile-card img:hover {
-            transform: scale(1.1);
-        }
-
-        .profile-card h3 {
-            margin-top: 15px;
-            margin-bottom: 5px;
-            font-size: 24px;
-        }
-
-        .profile-card p {
-            color: #6c757d;
-            font-size: 16px;
-        }
-
-        .footer {
-            background-color: #343a40;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-        }
-
-        .footer p {
-            margin-bottom: 10px;
-        }
-
-        .footer span {
-            display: block;
-            font-size: 14px;
-        }
-
-        .footer .nav-link {
-            color: white;
-            margin: 0 10px;
-            text-decoration: none;
-        }
-
-        .footer .nav-link:hover {
-            text-decoration: underline;
+        .nav {
+            position: relative;
+            z-index: 2;
         }
 
         .custom-btn {
@@ -125,11 +76,87 @@
             box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
         }
 
-        .custom-btn {
+        .profile-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .profile-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-card img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-card img:hover {
+            transform: scale(1.1);
+        }
+
+        .profile-card h3 {
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-size: 22px;
+        }
+
+        .profile-card p {
+            color: #6c757d;
+            font-size: 16px;
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .footer span {
+            display: block;
+            font-size: 14px;
+        }
+
+        .footer .nav-link {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer .nav-link:hover {
+            color: #ffc107;
+            text-decoration: underline;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 28px;
+            }
+
+            .hero-section p {
+                font-size: 16px;
+            }
+
+            .custom-btn {
                 font-size: 14px;
                 padding: 10px 20px;
             }
-
+        }
     </style>
 </head>
 
@@ -138,20 +165,20 @@
         <h1>About Us</h1>
         <p>Meet Our Experts</p>
         <nav class="nav justify-content-center">
-            <a href='/'><button class="custom-btn">Go to Home</button></a>
+            <a href="/">
+                <button class="custom-btn">Go to Home</button>
+            </a>
         </nav>
     </div>
 
     <div class="container mt-5">
-        
         <div class="row">
-            
             <div class="col-md-4 text-center">
                 <div class="profile-card">
-                    <img src="./static/puneet.jpeg"
+                    <img src="https://media.licdn.com/dms/image/v2/D5603AQFgfXQ7e1DnaQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1725305864511?e=1730937600&v=beta&t=PLQAQ7g_4BUFOt909q7j9L0kv8lCKtru9LPv49lvxZM"
                         alt="Puneet Kumar" class="img-fluid mb-2">
                     <h3>Puneet Kumar</h3>
-                    <p>Developer</p>
+                    <p>Full-Stack Developer</p>
                     <p>Contact:</p>
                     <p>
                         <a href="mailto:su-23028@sitare.org">su-23028@sitare.org</a>
@@ -160,7 +187,7 @@
             </div>
             <div class="col-md-4 text-center">
                 <div class="profile-card">
-                    <img src="./static/kushal.webp"
+                    <img src="https://lh3.googleusercontent.com/a-/ALV-UjUH1oFeBIFnF9SMnlj57M7OQcw07g69M1hgNXf0yNh9Bd1f1-M=s92-p-k-rw-no"
                         alt="Dr. Kushal Shah" class="img-fluid mb-2">
                     <h3>Dr. Kushal Shah</h3>
                     <p>Instructor</p>
@@ -173,36 +200,14 @@
             </div>
             <div class="col-md-4 text-center">
                 <div class="profile-card">
-                    <img src="./static/1684994096970.jpeg"
+                    <img src="https://media.licdn.com/dms/image/D4E03AQFCcZ8G4SQYKw/profile-displayphoto-shrink_800_800/0/1684994096970?e=1727913600&v=beta&t=5dYOPAYtaw78H4esgFcxe4jsqHYZuIRkwfUdMe4l8aw"
                         alt="Ajay Kumar" class="img-fluid mb-2">
                     <h3>Ajay Kumar</h3>
-                    <p>Developer</p>
+                    <p>Full-Stack Developer</p>
                     <p>Contact:</p>
                     <p>
                         <a href="mailto:su-23003@sitare.org">su-2303@sitare.org</a>
                     </p>
-                </div>
-
-
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-5">
-                <div class="profile-card small-card">
-                    <img src="./static/pankaj.jpeg" alt="Pankaj Yadav" class="img-fluid mb-2">
-                    <h3>Pankaj Yadav</h3>
-                    <p>Advisor</p>
-                    <p>Contact:</p>
-                    <p><a href="mailto:su-22013@sitare.org">su-22013@sitare.org</a></p>
-                </div>
-            </div>
-            <div class="col-md-5">
-                <div class="profile-card small-card">
-                    <img src="./static/kiirtan1.jpg" alt="Kirtan Khichi" class="img-fluid mb-2">
-                    <h3>Kirtan Khichi</h3>
-                    <p>Advisor</p>
-                    <p>Contact:</p>
-                    <p><a href="mailto:su-22009@sitare.org">su-22009@sitare.org</a></p>
                 </div>
             </div>
         </div>

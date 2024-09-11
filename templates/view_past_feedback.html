@@ -1,0 +1,62 @@
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Past Feedback</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Past Feedback</h1>
+    
+    {% if is_saturday %}
+        {% if can_submit_feedback %}
+            <p>You can submit feedback for this week.</p>
+            <a href="{{ url_for('student_portal') }}" class="button">Submit New Feedback</a>
+        {% else %}
+            <p>You have already submitted feedback for this week. You can submit new feedback next Saturday.</p>
+        {% endif %}
+    {% else %}
+        <p>Note: You can only submit new feedback on Saturdays.</p>
+    {% endif %}
+    
+    <form method="get" action="{{ url_for('view_past_feedback') }}">
+        <label for="week">Select Week:</label>
+        <select name="week" id="week" onchange="this.form.submit()">
+            <option value="">All Weeks</option>
+            {% for week in weeks %}
+                <option value="{{ week }}" {% if week|string == selected_week|string %}selected{% endif %}>Week {{ week }}</option>
+            {% endfor %}
+        </select>
+    </form>
+    
+    {% if feedback_data %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Date</th>
+                    <th>Week</th>
+                    <th>Understanding Rating</th>
+                    <th>Revision Rating</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for feedback in feedback_data %}
+                <tr>
+                    <td>{{ feedback[0] }}</td>
+                    <td>{{ feedback[1] }}</td>
+                    <td>{{ feedback[2] }}</td>
+                    <td>{{ feedback[3] }}</td>
+                    <td>{{ feedback[4] }}</td>
+                    <td>{{ feedback[5] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No past feedback found.</p>
+    {% endif %}
+</body>
+</html> {% endcomment %}
